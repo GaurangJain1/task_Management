@@ -34,6 +34,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(role::class,'usertasks','user_id','task_id');
     }
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class,'Comment','Assioner','');
+    }
 
     protected $fillable = [
         'name',

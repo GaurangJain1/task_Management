@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;  
+use App\Models\Comment; 
 use App\Models\emp_role;    
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -121,6 +122,13 @@ class AuthController extends Controller
             if($progress->save()){
                 info('% updated.');
             }
+    }
+    public function comment(){
+        $comment = Comment::all();
+        // $role = $comment->user->roles->first()->name;
+        // dd('$role');
+        dd($comment);
+
     }
 
 
