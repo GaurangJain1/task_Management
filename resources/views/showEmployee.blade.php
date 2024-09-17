@@ -14,8 +14,10 @@
                 <p class="mt-1 truncate text-xs leading-5 text-gray-500">{{$user->email}}</p>
                 </div>
             </div>
+
+            @foreach($user->getrole as $role)
             <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                <p class="text-sm leading-6 text-gray-900">Director of Product</p>
+                <p class="text-sm leading-6 text-gray-900">{{$role->Role}}</p>
                 <div class="mt-1 flex items-center gap-x-1.5">
                 <div class="flex-none rounded-full bg-emerald-500/20 p-1">
                     <div class="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
@@ -23,6 +25,7 @@
                 <p class="text-xs leading-5 text-gray-500">Online</p>
                 </div>
             </div>
+            @endforeach
             </li>
         @endforeach
       </ul>

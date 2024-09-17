@@ -55,17 +55,19 @@
                             <thead>
                               <tr>
                                 <th scope="col">Sr.#</th>
-                                <th scope="col">First
+                                <th scope="col">Task Name
                                     <span class="float-right">
                                         <i class="fa fa-arrow-up"></i>
                                         <i class="fa fa-arrow-down"></i>
                                     </span>
                                 </th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
-                                <th scope="col">Sr.#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Priority</th>
+                                <th scope="col">End Date</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Assigned to</th>
+                                <th scope="col">Mail</th>
+                                <th scope="col">Role</th>
                                 <th scope="col">Actions</th>
                               </tr>
                             </thead>
@@ -74,19 +76,42 @@
                                     <tr>
                                         <th scope="row">{{$task->task_id}}</th>
                                         <td>{{$task->task_name}}</td>
-                                        <td>{{$task->task_description}}</td>
+                                        <td title="task description only upto 10 characters">{{Str::limit($task->task_description,10)}}</td>
                                         <td>{{$task->priority}}</td>
                                         <td >{{$task->deadline}}</td>
+                                        <td style="opacity: 0.5;">Not Assigned!</td>
                                         @foreach($task->users as $user)
                                                 <div class="name">
-                                                    <td>{{$user->name}}</td>
+                                                    {{-- @if(!isset($user->name))
+                                                        <td style="opacity: 0.5;">Not Assigned!</td>
+                                                    @else
+                                                        <td>{{$user->name}}</td>
+                                                    @endif --}}
+                                                    
+                                                    <td {{ optional($user)->name ? '' : 'style="opacity: 0.5;"' }}>
+                                                        {{ optional($user)->name ?: 'Not Assigned!' }}
+                                                    </td>
                                                 </div>
                                                 <div class="mail">
-                                                    <td>{{$user->email}}</td>
-                                                </div>                                               
+                                                    @if(collect([$user->emai])->isEmpty())
+                                                        <td style="opacity: 0.5;">Not Assigned!</td>
+                                                    @else
+                                                        <td>{{$user->email}}</td>
+                                                    @endif
+                                                </div>
+                                                @foreach($user->getrole as $role)  
+                                                <div class="mail">
+                                                    <@if(collect([$role->Role])->isEmpty())
+                                                        <td style="opacity: 0.5;">Not Assigned!</td>
+                                                    @else
+                                                        <td>{{$role->Role}}</td>
+                                                    @endif
+                                                </div>  
+                                                @endforeach                                            
                                         @endforeach
+                                        {{-- hover:bg-gray-700 hover:text-white --}}
                                         <td><button type="button" class="text-gray-500 rounded-md  px-3 py-2 hover:bg-gray-700 hover:text-white
-                                            rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white" data-id="2" data-bs-toggle="modal" data-bs-target="#exampleModal">More</button></td>
+                                            rounded-md px-3 py-2 text-sm font-medium text-gray-300 " data-id="{{$task->task_id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">More</button></td>
                                     </tr>
                                 @endforeach
                             </tbody>

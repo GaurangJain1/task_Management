@@ -10,7 +10,7 @@ use App\Http\Middleware\Checkifin;
 Route::post('/',[AuthController::class,'loginPost'])->name("loginPost");
 Route::get('/',[AuthController::class,'login'])->name("login");
 
-Route::get('/comment',[AuthController::class,'comment'])->name("comment");
+Route::get('/comment',[PageController::class,'comment'])->name("comment");
 // ->middleware(Checkifin::class)
 
 Route::get('/register',[AuthController::class,'reg'])->name("register")->middleware(Check::class);
@@ -33,6 +33,8 @@ Route::get('/welcome',[PageController::class,'go'])->name("showtask")
 ->middleware(Check::class);
 Route::get('/about',[PageController::class,'check'])->middleware(Check::class);
 Route::get('/contact',[PageController::class,'feedback'])->name('feedback')->middleware(Check::class);
+Route::get('/contact/{id}', [PageController::class,'feedbackShow'])->name('feedbackShow')->middleware(Check::class);;
+Route::patch('/contact/{id}', [PageController::class,'feedbackUpdate'])->name('feedbackUpdate')->middleware(Check::class);;
 Route::get('/history',[PageController::class,'history'])->middleware(Check::class);
 
  

@@ -79,7 +79,7 @@
                 rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white" data-id="{{$progress->task_id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Update</button>
                 @if($progress->percentage_done == 100)
                 <a class="text-gray-500 rounded-md  px-3 py-2 hover:bg-gray-700 hover:text-white
-                rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white" aria-current="false" href="/contact">
+                rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white" data-id="{{$progress->task_id}}" aria-current="false" href="/contact ">
                 FEEDBACK
                 </a>
                 @endif

@@ -11,8 +11,8 @@ class role extends Model
     use HasFactory;
     public $timestamps = false;
 
-    public function users(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class);
-    }
+    // public function users(): HasOne
+    // {
+    //     return $this->HasOne(User::class);
+    // }
 }

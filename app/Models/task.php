@@ -6,8 +6,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User; 
-use App\Models\task;
+// use App\Models\task;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class task extends Model
 {
@@ -27,6 +28,9 @@ class task extends Model
     {
         return $this->belongsToMany(User::class,'usertasks','task_id','user_id');
     }
-    
+    // public function getrole(): HasMany
+    // {
+    //     return $this->hasMany(role::class,'user_id','id');
+    // }
 
 }

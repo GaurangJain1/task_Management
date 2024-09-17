@@ -1,6 +1,6 @@
-<?php
+`<?php
 
-namespace App\Models;
+// namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,8 +10,8 @@ class Phn extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    public function phn(): HasOne
-    {
-        return $this ->hasOne(Phn::class);
-    }
+    // public function phn(): HasOne
+    // {
+    //     return $this ->hasOne(Phn::class);
+    // }
 }

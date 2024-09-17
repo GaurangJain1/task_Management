@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Models\User; 
+use App\Models\role; 
 use App\Models\task;
 use App\Models\Usertasks;
 use Carbon\Carbon;
@@ -33,11 +35,31 @@ class PageController extends Controller
     public function go(){
         // $task = task::find(6);
         // return $task->users;
-        $task = task::all();
+        // $task = role::all();
+
+        // $sortColumn1 = 'deadline'; 
+        // $direction1 = 'asc';
+        // $sortColumn2 = 'users.name'; 
+        // $direction2 = 'asc';
+        
+        // $task = task::with('users.getrole')->orderBy($sortColumn1, $direction1)
+        //                 ->orderBy($sortColumn2, $direction2)
+        //                 ->get();
+
+        // $task = task::select('tasks.*')
+        //         ->with('users')
+        //         ->join('user_task', 'user_task.task_id', '=', 'tasks.id')
+        //         ->join('users', 'user_task.user_id', '=', 'tasks.id')
+        //         ->orderBy($sortColumn1, $direction1)
+        //          ->orderBy($sortColumn2, $direction2)
+        //         ->get();
+
+        $task = task::with('users.getrole')->get()->sortBy('deadline')->sortBy('users.name');
+        // dd($task);->sortBy('task_name')
         return view('welcome',['data'=>$task]);
 
         
-        // dd($task->users);
+        // dd($task->users);with('role')->
         //  return $task->users;
         //  with('users')->get();
         // $task1 = \App\Models\User::all();,'data1'=>$task1
@@ -45,22 +67,25 @@ class PageController extends Controller
         // $students = DB::table('')
     }
 
+
     public function feedback(){
         $users = User::all()->toArray();
         return view ("feedback",compact("users"));
         //return view ('feedback'); 
     }
+    public function feedbackShow($id){
+        $task = Task::find($id);
+        return view('', compact('task'));
+    }
+    public function feedbackUpdate(Request $request){
+        $request->validate([
+
+        ]);
+    }
     public function history(){
-        // $users = \App\Models\task::all()->toArray();
-        // return view ("history",compact("users"));
-        // $tasks = ::all();
-        // dd($tasks[0]->priority);
-
-
-        // $data = task::with('employee')->where('task_id',1)->get();
+        // return view('history');
         $data = task::all();
-        $phn = User::find(1)->phn;
-        return view ('history',['tasks'=> $data]); 
+        return view('history',['data'=>$data]);
     }
     public function task(){
         return view('task');
@@ -97,9 +122,18 @@ class PageController extends Controller
         return redirect(route("feedback"))->with("error","failed to create task");
     }
     public function showEmployee(){
-        $users = User::all();
+        $users = User::with('getrole')->get();
+        // dd($users);
         return view('showEmployee',['data'=>$users]);
     }
+    public function comment(){
+        $comment = Comment::all();
+        return view('comment',['data'=>$comment]);
 
+        // $role = $comment->user->roles->first()->name;
+        // dd('$role');
+        // dd($comment);
+
+    }
    
 }

@@ -6,10 +6,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\User; 
+// use App\Models\User; 
 use App\Models\task;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 class User extends Authenticatable
 {
@@ -30,14 +32,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(task::class,'usertasks','user_id','task_id');
     }
-    public function role(): BelongsToMany
+    public function getrole(): HasMany
     {
-        return $this->belongsToMany(role::class,'usertasks','user_id','task_id');
+        return $this->hasMany(role::class,'user_id','id');
     }
-    public function comments(): HasMany
-    {
-        return $this->hasMany(Comment::class,'Comment','Assioner','');
-    }
+    // public function comments(): HasMany
+    // {
+    //     return $this->hasMany(Comment::class,'Comment','Assioner','');
+    // }
 
     protected $fillable = [
         'name',
