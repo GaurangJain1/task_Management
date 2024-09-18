@@ -54,8 +54,8 @@ class PageController extends Controller
         //          ->orderBy($sortColumn2, $direction2)
         //         ->get();
 
-        $task = task::with('users.getrole')->get()->sortBy('deadline')->sortBy('users.name');
-        // dd($task);->sortBy('task_name')
+        $task = task::with('users','comments')->get()->sortByDesc('deadline')->sortBy('users.name');
+        // dd($task);
         return view('welcome',['data'=>$task]);
 
         
@@ -68,20 +68,36 @@ class PageController extends Controller
     }
 
 
-    public function feedback(){
-        $users = User::all()->toArray();
-        return view ("feedback",compact("users"));
-        //return view ('feedback'); 
-    }
-    public function feedbackShow($id){
-        $task = Task::find($id);
-        return view('', compact('task'));
-    }
-    public function feedbackUpdate(Request $request){
-        $request->validate([
 
-        ]);
+
+
+
+
+
+
+
+
+
+    // public function feedback(){
+    //     $users = User::all()->toArray();
+    //     return view ("feedback",compact("users"));
+    //     //return view ('feedback'); 
+    // }
+    public function feedbackShow($id){
+        // dd("value sent=",$id);
+        $task = task::find($id);
+        // dd($task);
+        return view("feedback", compact('task'));
     }
+    // public function feedbackUpdate(Request $request){
+    //     $request->validate([
+
+    //     ]);
+    // }
+
+
+
+
     public function history(){
         // return view('history');
         $data = task::all();
@@ -126,13 +142,14 @@ class PageController extends Controller
         // dd($users);
         return view('showEmployee',['data'=>$users]);
     }
-    public function comment(){
-        $comment = Comment::all();
+    public function comment($id){
+        $comment = task::with('comments')->where('task_id',$id)->get();
+        // dd($comment);
+
         return view('comment',['data'=>$comment]);
 
         // $role = $comment->user->roles->first()->name;
         // dd('$role');
-        // dd($comment);
 
     }
    

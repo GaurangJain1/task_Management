@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class task extends Model
 {
     use HasFactory;
-    public $timestamps = false;
+    public $timestamps = true;
     protected $primaryKey = 'task_id';
 
     protected $fillable = [
@@ -32,5 +32,9 @@ class task extends Model
     // {
     //     return $this->hasMany(role::class,'user_id','id');
     // }
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class,'task_id','task_id');
+    }
 
 }

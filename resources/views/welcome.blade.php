@@ -51,70 +51,77 @@
                         @endforeach --}}
 
 
-                        <table class="table">
-                            <thead>
-                              <tr>
-                                <th scope="col">Sr.#</th>
-                                <th scope="col">Task Name
-                                    <span class="float-right">
-                                        <i class="fa fa-arrow-up"></i>
-                                        <i class="fa fa-arrow-down"></i>
-                                    </span>
-                                </th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Priority</th>
-                                <th scope="col">End Date</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Assigned to</th>
-                                <th scope="col">Mail</th>
-                                <th scope="col">Role</th>
-                                <th scope="col">Actions</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($data as $task)
-                                    <tr>
-                                        <th scope="row">{{$task->task_id}}</th>
-                                        <td>{{$task->task_name}}</td>
-                                        <td title="task description only upto 10 characters">{{Str::limit($task->task_description,10)}}</td>
-                                        <td>{{$task->priority}}</td>
-                                        <td >{{$task->deadline}}</td>
-                                        <td style="opacity: 0.5;">Not Assigned!</td>
-                                        @foreach($task->users as $user)
-                                                <div class="name">
-                                                    {{-- @if(!isset($user->name))
-                                                        <td style="opacity: 0.5;">Not Assigned!</td>
-                                                    @else
-                                                        <td>{{$user->name}}</td>
-                                                    @endif --}}
-                                                    
-                                                    <td {{ optional($user)->name ? '' : 'style="opacity: 0.5;"' }}>
-                                                        {{ optional($user)->name ?: 'Not Assigned!' }}
-                                                    </td>
-                                                </div>
-                                                <div class="mail">
-                                                    @if(collect([$user->emai])->isEmpty())
-                                                        <td style="opacity: 0.5;">Not Assigned!</td>
-                                                    @else
-                                                        <td>{{$user->email}}</td>
-                                                    @endif
-                                                </div>
-                                                @foreach($user->getrole as $role)  
-                                                <div class="mail">
-                                                    <@if(collect([$role->Role])->isEmpty())
-                                                        <td style="opacity: 0.5;">Not Assigned!</td>
-                                                    @else
-                                                        <td>{{$role->Role}}</td>
-                                                    @endif
-                                                </div>  
-                                                @endforeach                                            
-                                        @endforeach
-                                        {{-- hover:bg-gray-700 hover:text-white --}}
-                                        <td><button type="button" class="text-gray-500 rounded-md  px-3 py-2 hover:bg-gray-700 hover:text-white
-                                            rounded-md px-3 py-2 text-sm font-medium text-gray-300 " data-id="{{$task->task_id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">More</button></td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                          </table>               
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Sr.#</th>
+                    <th scope="col">Task Name
+                        <span class="float-right">
+                            <i class="fa fa-arrow-up"></i>
+                            <i class="fa fa-arrow-down"></i>
+                        </span>
+                    </th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Priority</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Assigned to</th>
+                    <th scope="col">Task Start Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Last Updated On</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    @foreach($data as $task)
+                        <tr>
+                            <th scope="row">{{$task->task_id}}</th>
+                            <td><button type="button" class="text-gray-500 rounded-md  px-3 py-2 hover:bg-gray-700 hover:text-white
+    rounded-md px-3 py-2 text-sm font-medium text-gray-300 " data-id="{{$task->task_id}} data-bs-toggle="modal" data-bs-target="#exampleModal">{{ $task->task_name}}</button></td>
+                            <td style="cursor: pointer;" title="{{$task->task_description}}">{{Str::limit($task->task_description,10)}}</td>
+                            <td>{{$task->priority}}</td>
+                            <td >{{$task->deadline}}</td> 
+                            @foreach($task->users as $user)
+                                <td>{{$user->name}}</td>                           
+                            @endforeach
+                            <td >{{$task->created_at}}</td>
+                            {{-- <td >{{$task->current_status}}</td> --}}
+                            <td style="opacity: 0.5;">Not Started</td>
+                            <td >{{$task->updated_at}}</td>
+                            {{-- <td >{{$task->deadline}}</td> --}}
+
+                            {{-- <td style="opacity: 0.5;">Emp</td>
+                            <td style="opacity: 0.5;">00/00/0000</td>
+                            <td style="opacity: 0.5;">Not Started</td>
+                            <td style="opacity: 0.5;">00/00/0000</td> --}}
+
+                            @foreach($task->comments as $user)
+                                    {{-- {{$user->created_at}} --}}
+                                    {{-- <div class="name">
+                                        <td>{{$user->created_at}}</td>
+                                    </div> --}}
+                                    {{-- <div class="mail">
+                                        @if(empty($user->email))
+                                            <td style="opacity: 0.5;">Not Assigned!</td>
+                                        @else
+                                            <td>{{$user->email}}</td>
+                                        @endif
+                                    </div>
+                                    @foreach($user->getrole as $role)  
+                                    <div class="role">
+                                        <@if(empty($role->Role))
+                                             <td style="opacity: 0.5;">Not Asssigned!</td>
+                                        @else
+                                            <td>{{$role->Role}}</td>    
+                                        @endif
+                                    </div>  
+                                    @endforeach                                             --}}
+                            @endforeach
+                            {{-- hover:bg-gray-700 hover:text-white --}}
+                            <td><button type="button" class="text-gray-500 rounded-md  px-3 py-2 hover:bg-gray-700 hover:text-white
+                                rounded-md px-3 py-2 text-sm font-medium text-gray-300 " data-id="{{$task->task_id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">More</button></td>
+                        </tr>
+                    @endforeach
+                </tbody>
+              </table>               
              
 </x-layout>                      

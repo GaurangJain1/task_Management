@@ -123,13 +123,7 @@ class AuthController extends Controller
                 info('% updated.');
             }
     }
-    public function comment(){
-        $comment = Comment::all();
-        // $role = $comment->user->roles->first()->name;
-        // dd('$role');
-        dd($comment);
-
-    }
+    
 
 
 }

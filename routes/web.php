@@ -10,7 +10,7 @@ use App\Http\Middleware\Checkifin;
 Route::post('/',[AuthController::class,'loginPost'])->name("loginPost");
 Route::get('/',[AuthController::class,'login'])->name("login");
 
-Route::get('/comment',[PageController::class,'comment'])->name("comment");
+Route::get('/comment/{id}',[PageController::class,'comment'])->name("comment");
 // ->middleware(Checkifin::class)
 
 Route::get('/register',[AuthController::class,'reg'])->name("register")->middleware(Check::class);

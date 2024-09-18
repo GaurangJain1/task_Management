@@ -38,7 +38,7 @@ class User extends Authenticatable
     }
     // public function comments(): HasMany
     // {
-    //     return $this->hasMany(Comment::class,'Comment','Assioner','');
+    //     return $this->hasMany(Comment::class,'id','id','');
     // }
 
     protected $fillable = [
