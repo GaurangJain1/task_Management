@@ -1,43 +1,48 @@
 <x-layout>
     <x-slot:heading>
-        HOME PAGE
+        HOME PAGE FOR ADMIN
     </x-slot:heading>
     
-    <h1>THIS IS WELCOMEE FILEE!!!!!!!</h1>
+    <br>
     <br>
     <h2>Table Task is Displayed</h2>
     <br>
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Update Percentage Completed</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                
-                Update Percentage for Task Id: <p id ="modal-value"></p>
-            </div>
-            <form action="{{route("updateprogressPost")}}" method="post" id = "update-form  ">
-                @csrf
-                <div class="modal-body">
-                    <div class="form-group mb-3">
-                        {{-- <label for=""></label> --}}
-                        
-                        <input type="text" name ="percentage" class="form-control" placeholder="Update % of task completed">
-                    </div>
-                    
+    <div id="descModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Full Description</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button id ="#update-data" type="submit" class="btn btn-primary" >Update changes!</button>
+                <div class="modal-body" style="word-wrap: break-word;">
+                    <p id="full-description"></p>
                 </div>
-            </form>
-        </div>
+            </div>
         </div>
     </div>
+
     
+    <div id="actionModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">All Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="word-wrap: break-word;">
+                    <p id="full-id"></p>
+                </div>
+                <div class="task_description">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
     
             
             {{-- @foreach($data as $task)
@@ -63,7 +68,7 @@
                     </th>
                     <th scope="col">Description</th>
                     <th scope="col">Priority</th>
-                    <th scope="col">End Date</th>
+                    <th scope="col">Due Date</th>
                     <th scope="col">Assigned to</th>
                     <th scope="col">Task Start Date</th>
                     <th scope="col">Status</th>
@@ -75,18 +80,18 @@
                     @foreach($data as $task)
                         <tr>
                             <th scope="row">{{$task->task_id}}</th>
-                            <td><button type="button" class="text-gray-500 rounded-md  px-3 py-2 hover:bg-gray-700 hover:text-white
-    rounded-md px-3 py-2 text-sm font-medium text-gray-300 " data-id="{{$task->task_id}} data-bs-toggle="modal" data-bs-target="#exampleModal">{{ $task->task_name}}</button></td>
-                            <td style="cursor: pointer;" title="{{$task->task_description}}">{{Str::limit($task->task_description,10)}}</td>
+                            <td>{{ $task->task_name}}</td>
+
+                            <td style="cursor: pointer;"><button type="button" data-description="{{ $task->task_description }}" class="description"  data-bs-toggle="modal" data-bs-target="#descModal">{{Str::limit($task->task_description,10)}}</button></td>
                             <td>{{$task->priority}}</td>
-                            <td >{{$task->deadline}}</td> 
+                            <td >{{ Carbon\Carbon::parse($task->deadline)->format('m/d/Y h:i A') }}</td> 
                             @foreach($task->users as $user)
                                 <td>{{$user->name}}</td>                           
                             @endforeach
-                            <td >{{$task->created_at}}</td>
+                            <td >{{ Carbon\Carbon::parse($task->created_at)->format('m/d/Y h:i A') }}</td>
                             {{-- <td >{{$task->current_status}}</td> --}}
                             <td style="opacity: 0.5;">Not Started</td>
-                            <td >{{$task->updated_at}}</td>
+                            <td >{{ Carbon\Carbon::parse($task->updated_at)->format('m/d/Y h:i A') }}</td>
                             {{-- <td >{{$task->deadline}}</td> --}}
 
                             {{-- <td style="opacity: 0.5;">Emp</td>
@@ -117,11 +122,12 @@
                                     @endforeach                                             --}}
                             @endforeach
                             {{-- hover:bg-gray-700 hover:text-white --}}
-                            <td><button type="button" class="text-gray-500 rounded-md  px-3 py-2 hover:bg-gray-700 hover:text-white
-                                rounded-md px-3 py-2 text-sm font-medium text-gray-300 " data-id="{{$task->task_id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">More</button></td>
+                            <td><button type="button" class="id" data-id="{{ $task->users}}" data-bs-toggle="modal" data-bs-target="#actionModal">More</button></td>
                         </tr>
                     @endforeach
                 </tbody>
               </table>               
              
 </x-layout>                      
+{{-- title="{{$task->task_description}}class="text-gray-500 rounded-md  px-3 py-2 hover:bg-gray-700 hover:text-white
+    rounded-md px-3 py-2 text-sm font-medium text-gray-300 " --}}

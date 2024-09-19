@@ -15,6 +15,7 @@ class task extends Model
     use HasFactory;
     public $timestamps = true;
     protected $primaryKey = 'task_id';
+    protected $dates = ['deadline'];
 
     protected $fillable = [
         'task_id', 

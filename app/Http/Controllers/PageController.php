@@ -56,6 +56,7 @@ class PageController extends Controller
 
         $task = task::with('users','comments')->get()->sortByDesc('deadline')->sortBy('users.name');
         // dd($task);
+        // dd($task);{{ Carbon\Carbon::parse($article->expired_at)->format('Y-m-d') }}
         return view('welcome',['data'=>$task]);
 
         
