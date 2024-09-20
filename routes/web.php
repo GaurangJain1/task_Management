@@ -1,11 +1,15 @@
 <?php
 
+use App\Http\Controllers\AjaxController;
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\Check;
 use App\Http\Middleware\Checkifin;
+
+
+Route::post('/ajax/request', [AjaxController::class, 'handleRequest']);
 
 Route::post('/',[AuthController::class,'loginPost'])->name("loginPost");
 Route::get('/',[AuthController::class,'login'])->name("login");
@@ -31,6 +35,7 @@ Route::post('/update_progress',[AuthController::class,'updateprogressPost'])->na
 
 Route::get('/welcome',[PageController::class,'go'])->name("showtask")
 ->middleware(Check::class);
+Route::post('sdata',[AjaxController::class,'saveData']);
 Route::get('/about',[PageController::class,'check'])->middleware(Check::class);
 Route::get('/contact',[PageController::class,'feedback'])->name('feedback')->middleware(Check::class);
 Route::get('/contact/{id}', [PageController::class,'feedbackShow'])->name('feedbackShow')->middleware(Check::class);;
