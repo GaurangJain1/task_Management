@@ -35,7 +35,10 @@ Route::post('/update_progress',[AuthController::class,'updateprogressPost'])->na
 
 Route::get('/welcome',[PageController::class,'go'])->name("showtask")
 ->middleware(Check::class);
+Route::get('getData',[AjaxController::class,'viewData'])
+->middleware(Check::class);
 Route::post('sdata',[AjaxController::class,'saveData']);
+// Route::post('vdata',[AjaxController::class,'viewData']);
 Route::get('/about',[PageController::class,'check'])->middleware(Check::class);
 Route::get('/contact',[PageController::class,'feedback'])->name('feedback')->middleware(Check::class);
 Route::get('/contact/{id}', [PageController::class,'feedbackShow'])->name('feedbackShow')->middleware(Check::class);;

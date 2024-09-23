@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\task;
+use App\Models\role;    
 use Carbon\Carbon;
 
 use App\Models\User; 
@@ -20,22 +21,28 @@ class AjaxController extends Controller
     // public function savedata(Request $request){
     //     echo "hellooooo";
     // }
-    public function saveData(Request $request){
-        // dd($request);
+    public function saveData(Request $req){
+        // dd($req);
     // if($request->ajax()){
     //     return "Request is of Ajax Type";
     // }
     // return "Request is of Http type";
     $task = new task();
-    parse_str($request->input('data'),$formData);
-
-    $task->task_name =$request->taskname;
-    $task->task_description =$request->desc;
-    $task->attached_file =$request->file_upload;
-    $task->priority =$request->priority;
-    $dateString = $request->enddate;
+    // $role = new role();
+    parse_str($req->input('data'),$request);
+    // dd($request);
+    $task->task_name =$request['taskname'];
+    $task->task_description =$request['desc'];
+    $task->current_status = $request['taskstatus'];
+    // $role->user_id = $request['assignedto'];
+    // $role->Role = $request['role'];
+    $task->attached_file =$request['file_upload'];
+    $task->priority =$request['priority'];
+    $dateString = $request['enddate'];
     $date = Carbon::createFromFormat('m/d/Y', $dateString);
     $task->deadline= $date;
+    $now = Carbon::now();
+    $task->updated_at= $now;
     if($task->save()){
         echo "SAVED!";
     }
@@ -43,5 +50,16 @@ class AjaxController extends Controller
         echo "NOT SAVED!!";
     }
 }
+
+    public function viewData(){
+        $data = task::all();
+        // dd($data);
+        return json_encode($data);
+    }
+
+    
+    public function deleteData(){
+
+    }
 }
 

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User; 
 use App\Models\role; 
 use App\Models\task;
-use App\Models\Usertasks;
+use App\Models\usertasks;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
@@ -67,18 +67,6 @@ class PageController extends Controller
         // return view('welcome',['data'=>$task]);
         // $students = DB::table('')
     }
-
-
-
-
-
-
-
-
-
-
-
-
     // public function feedback(){
     //     $users = User::all()->toArray();
     //     return view ("feedback",compact("users"));
@@ -96,18 +84,19 @@ class PageController extends Controller
     //     ]);
     // }
 
-
-
-
     public function history(){
         // return view('history');
         $data = task::all();
         return view('history',['data'=>$data]);
     }
     public function task(){
-        return view('task');
+        $user = User::all()->toArray();
+        // dd($user);
+        return view('task',['data'=>$user]);
     }
     public function taskPost(Request $request){
+        
+
         $request->validate([
             "taskname"=>"required",
             "desc"=>"required",
@@ -118,14 +107,29 @@ class PageController extends Controller
         // return $request->enddate;
         
         $task = new task();
+        $usertask = new usertasks();
         $task->task_id =$request->taskid;
         $task->task_name =$request->taskname;
         $task->task_description =$request->desc;
         $task->attached_file =$request->file_upload;
         $task->priority =$request->priority;
-        $dateString = $request->enddate;
-        $date = Carbon::createFromFormat('m/d/Y', $dateString);
+        // $role->user_id =$request->user_id;
+        $enddateString = $request->enddate;
+        $date = Carbon::createFromFormat('m/d/Y', $enddateString);
         $task->deadline= $date;
+        $now = Carbon::now();
+        $task->created_at= $now;
+        $now = Carbon::now();
+        $task->updated_at= $now;
+
+        $task->save();
+        $id = $request->taskid;
+        // dd($id);
+
+        $usertask->user_id=$request->Role;           
+        $usertask->task_id = $id;
+        
+        
 
         // $task->save();
         // return $task->task_name;
@@ -133,7 +137,7 @@ class PageController extends Controller
         // // $task-> =$request->;
 
         
-        if($task->save()){
+        if($usertask->save()){
             return redirect(route("showtask") )->with("success","task created successfully");
         }
         return redirect(route("feedback"))->with("error","failed to create task");

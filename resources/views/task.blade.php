@@ -119,6 +119,25 @@
             </select>
           </div>
         </div>
+        {{-- <div class="sm:col-span-4">
+          <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Assigned to</label>
+          <div class="mt-2">
+            <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+              <span class="flex select-none items-center pl-3 text-gray-500 sm:text-sm"></span>
+              <input type="text" name="user_id" id="assignedto" autocomplete="username" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="Task 1">
+            </div>
+          </div>
+        </div> --}}
+        <div class="sm:col-span-3">
+          <label for="priority" class="block text-sm font-medium leading-6 text-gray-900">Select User to Assign!!</label>
+          <div class="mt-2">
+            <select id="country" name="Role" autocomplete="country-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+              @foreach($data as $users)
+                <option>{{$users['id']}}</option>
+              @endforeach
+            </select>
+          </div>
+        </div>
 {{-- 
         <div class="col-span-full">
           <label for="street-address" class="block text-sm font-medium leading-6 text-gray-900">Street address</label>

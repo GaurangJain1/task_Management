@@ -7,7 +7,7 @@
 @foreach ($data as $item)
 {{ $item->task_id}}
 <a href="/comment/{{ $item->task_id}}"><button type="button" class="text-gray-500 rounded-md  px-3 py-2 hover:bg-gray-700 hover:text-white
-                                            rounded-md px-3 py-2 text-sm font-medium text-gray-300 " data-id="{{$item->task_id}} data-bs-toggle="modal" data-bs-target="#exampleModal">{{ $item->task_name}}</button></a>
+    rounded-md px-3 py-2 text-sm font-medium text-gray-300 " data-id="{{$item->task_id}} data-bs-toggle="modal" data-bs-target="#exampleModal">{{ $item->task_name}}</button></a>
 
 
 <br>

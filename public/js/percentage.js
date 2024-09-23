@@ -33,7 +33,14 @@ $(document).ready(function() {
 });
 
 $(document).ready(function(){
+
+  $('.id').click(function() {
+        var id = $(this).attr('data-id');
+        $('#full-id').text(id);
+        $('#actionModal').modal('show');
+    });
   $('#submitform').on('submit',function(e){
+    
     e.preventDefault();
     var data=$('#submitform').serialize();
     alert(data);
@@ -50,10 +57,35 @@ $(document).ready(function(){
         $('#respanel').html(response);
         $('#submitform')[0].reset();  
         $('#actionModal').modal('hide');
+        fetchRecords();
       }
     });
   });
+  function fetchRecords(){
+    $.ajax({
+      url:'getData',
+      type:'GET',
+      success:function(response){
+        var tr='';
+        for(var i=0;i<response.length;i++){
+          var id = response[i].task_id;
+          var desc = response[i].task_description;
+          var name = response[i].task_name;
+          var priority = response[i].priority;
+          var file = response[i].attached_file;
+          var deadline = response[i].deadline;
+          var status = response[i].current_status;
+          var cr = response[i].created_at;
+          var up = response[i].updated_at;
+
+        }
+      }
+    });
+  }
+  fetchRecords();
 });
+
+
 
 // $(document).ready(function() {
 //   $('.id').click(function() {
