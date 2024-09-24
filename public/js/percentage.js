@@ -31,58 +31,100 @@ $(document).ready(function() {
       $('#descModal').modal('hide');
   });
 });
-
+// attr('data-id')
 $(document).ready(function(){
 
-  $('.id').click(function() {
+  $('.id').click(function(e) {
+        e.preventDefault();
         var id = $(this).attr('data-id');
-        $('#full-id').text(id);
-        $('#actionModal').modal('show');
-    });
-  $('#submitform').on('submit',function(e){
-    
-    e.preventDefault();
-    var data=$('#submitform').serialize();
-    alert(data);
-    $.ajax({
-      url :"sdata",
-      type:"POST",
-      headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        $.ajax({
+          url:'edit',
+          type:'POST',
+          headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+          data:{
+            // "_token":"{{csrf_token()}}",
+            data:id
+          },
+          success:function(response){
+            console.log(response[0].users[0].id);
+            $('#submitform')[0].reset();
+            $('#username').val(response[0].task_name);
+            $('#about').val(response[0].task_description);
 
-      data:{
-        // "_token":"{{csrf_token()}}",
-        data:data
-      },
-      success:function(response){
-        $('#respanel').html(response);
-        $('#submitform')[0].reset();  
-        $('#actionModal').modal('hide');
-        fetchRecords();
-      }
-    });
+            $('#taskstatus').val(response[0].current_status);
+            // $('#assignedto').val(response[0].id);
+            $('#priority').val(response[0].priority);
+            $('#role').val(response[0].users[0].id);
+            $('#datepicker1').val(response[0].deadline);
+            $('#createdate').val(response[0].created_at);
+            $('#actionModal').modal('show');
+
+          }
+        });
+        // $('#full-id').text(id);
+        // $('#actionModal').modal('show');
   });
-  function fetchRecords(){
-    $.ajax({
-      url:'getData',
-      type:'GET',
-      success:function(response){
-        var tr='';
-        for(var i=0;i<response.length;i++){
-          var id = response[i].task_id;
-          var desc = response[i].task_description;
-          var name = response[i].task_name;
-          var priority = response[i].priority;
-          var file = response[i].attached_file;
-          var deadline = response[i].deadline;
-          var status = response[i].current_status;
-          var cr = response[i].created_at;
-          var up = response[i].updated_at;
+    // fetchRecords();
+  // $('#submitform').on('submit',function(e){
+    
+  //   e.preventDefault();
+  //   var data=$('#submitform').serialize();
+  //   alert(data);
+  //   $.ajax({
+  //     url :"sdata",
+  //     type:"POST",
+  //     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 
-        }
-      }
-    });
-  }
-  fetchRecords();
+  //     data:{
+  //       // "_token":"{{csrf_token()}}",
+  //       data:data
+  //     },
+  //     success:function(response){
+  //       // $('#respanel').html(response);
+  //       $('#submitform')[0].reset();  
+  //       $('#actionModal').modal('hide');
+        
+  //     }
+  //   });
+  // });
+  // function fetchRecords(){
+  //   $.ajax({
+  //     url:'getData',
+  //     type:'GET',
+  //     success:function(response){
+        // console.log(response);
+        
+        // var tr='';
+        // for(var i=0;i<response.length;i++){
+        //   var id = response[i].task_id;
+        //   var name = response[i].task_name;
+        //   var desc = response[i].task_description;
+        //   var priority = response[i].priority;
+        //   // var file = response[i].attached_file;
+        //   // var role = response[i].Role;
+        //   var deadline = response[i].deadline;
+        //   var status = response[i].current_status;
+        //   var cr = response[i].created_at;
+        //   var up = response[i].updated_at;
+
+        //   tr += '<tr>';
+        //   tr += '<td>'+id+'</td>';
+        //   tr += '<td>'+name+'</td>';
+        //   // tr += '<td>'<button type="button" data-description="desc" class="description"  data-bs-toggle="modal" data-bs-target="#descModal"> <? php Str::limit(desc,10)?> </button>'</td>';
+        //   tr += '<td>'+priority+'</td>';
+        //   tr += '<td>'+deadline+'</td>';
+        //   // tr += '<td style="opacity: 0.5;">'+status+'</td>';
+        //   tr += '<td>'+status+'</td>';
+        //   tr += '<td>'+cr+'</td>';
+        //   tr += '<td>'+up+'</td>';
+        //   tr += '<td>'+<button type="button" class="id"  data-bs-toggle="modal" data-bs-target="#actionModal" value="'+id+'">More</button>+'</td>';
+        //   tr += '</tr>';
+          // $('#task_table').html(tr);
+        
+      // }
+  //   });
+  // }
+  // fetchRecords();
 });
 
 

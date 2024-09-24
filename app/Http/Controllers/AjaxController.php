@@ -53,13 +53,21 @@ class AjaxController extends Controller
 
     public function viewData(){
         $data = task::all();
-        // dd($data);
-        return json_encode($data);
+        // $data = task::with('users','comments')->get()->sortByDesc('deadline')->sortBy('users.name');
+
+        // dd($data);  
+        return $data;
+    }
+    public function editData(Request $id){
+        // dd($id);
+        return(task::with('users')->find($id));
+        // dd(task::with('users')->find($req));
+
     }
 
     
-    public function deleteData(){
-
+    public function deleteData($req){
+        return task::with('users')->where('');
     }
 }
 

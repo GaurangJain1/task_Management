@@ -34,7 +34,6 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    
                 </div>
                 <div class="modal-body" style="word-wrap: break-word;">
                     
@@ -62,7 +61,7 @@
                                 <div class="mt-2">
                                   <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                     <span class="flex select-none items-center pl-3 text-gray-500 sm:text-sm"></span>
-                                    <input type="text" name="taskname" id="username" autocomplete="username" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="Task 1" >
+                                    <input type="text" name="taskname" id="username" autocomplete="username" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" >
                                   </div>
                                 </div>
                               </div>
@@ -83,13 +82,14 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="sm:col-span-4">
-                                <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Assigned To:</label>
+                              <div class="sm:col-span-3">
+                                <label for="priority" class="block text-sm font-medium leading-6 text-gray-900">Select User to Assign!!</label>
                                 <div class="mt-2">
-                                  <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                    <span class="flex select-none items-center pl-3 text-gray-500 sm:text-sm"></span>
-                                    <input type="text" name="assignedto" id="assignedto" autocomplete="username" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="">
-                                  </div>
+                                  <select id="role" name="Role" autocomplete="country-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                    {{-- @foreach($data as $users)
+                                      <option>{{$users['id']}}</option>
+                                    @endforeach --}}
+                                  </select>
                                 </div>
                               </div>
                               <div class="col-span-full">
@@ -123,17 +123,9 @@
                                 </div>
                               </div>
                         <div>
-                          <div class="sm:col-span-3">
-                            <label for="priority" class="block text-sm font-medium leading-6 text-gray-900">Select User to Assign!!</label>
-                            <div class="mt-2">
-                              <select id="role" name="Role" autocomplete="country-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                                @foreach($data as $users)
-                                  <option>{{$users['id']}}</option>
-                                @endforeach
-                              </select>
-                            </div>
-                          </div>
+                          
                           <p style="padding-top: 18px;">Due Date: <input type="text" name ="enddate" id="datepicker1" style="background-color: gainsboro;"></p>
+                          <p style="padding-top: 18px;">Task Creates At: <input type="text" name ="enddate" id="createdate" style="background-color: gainsboro;"></p>
                         </div>
                         <label class = "roleminus" for="roleminus">
                             <input type="checkbox" name="rolem" id="" value ="Assignee" >
@@ -142,7 +134,7 @@
                         </label>
                         <div class="mt-6 flex items-center justify-end gap-x-6">
                           <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
-                          <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Create</button>
+                          <button id ="edit"type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Create</button>
                         </div>
                       </form>
                 </div>
@@ -161,7 +153,7 @@
                                 @endif
                            
                         @endforeach --}}
-            {{-- <table class="table">
+            <table class="table">
                 <thead>
                   <tr>
                     <th scope="col">Sr.#</th>
@@ -169,7 +161,7 @@
                         <span class="float-right">
                             <i class="fa fa-arrow-up"></i>
                             <i class="fa fa-arrow-down"></i>
-                        </span>
+                        </span> 
                     </th>
                     <th scope="col">Description</th>
                     <th scope="col">Priority</th>
@@ -194,21 +186,21 @@
                                 <td>{{$user->name}}</td>                           
                             @endforeach
                             <td >{{ Carbon\Carbon::parse($task->created_at)->format('m/d/Y h:i A') }}</td>
-                            {{-- <td >{{$task->current_status}}</td> --}}
-                            {{-- <td style="opacity: 0.5;">Not Started</td>
+                            <td >{{$task->current_status}}</td>
+                            <td style="opacity: 0.5;">Not Started</td>
                             <td >{{ Carbon\Carbon::parse($task->updated_at)->format('m/d/Y h:i A') }}</td>
-                            {{-- <td >{{$task->deadline}}</td> --}}
+                            <td >{{$task->deadline}}</td>
 
-                            {{-- @foreach($task->comments as $user)
+                             @foreach($task->comments as $user)
                                                                         
-                            @endforeach --}} 
+                            @endforeach  
                             {{-- hover:bg-gray-700 hover:text-white --}}
-                            {{-- <td><button type="button" class="id" data-id="{{ $task->task_id}}" data-bs-toggle="modal" data-bs-target="#actionModal">More</button></td>
+                            <td><button type="button" class="id" data-id="{{ $task->task_id}}" data-bs-toggle="modal" data-bs-target="#actionModal">More</button></td>
                         </tr>
                     @endforeach
                 </tbody>
-              </table> --}} 
-            <table class="table">
+              </table> 
+            {{-- <table class="table">
                 <thead>
                   <tr>
                     <th scope="col">Sr.#</th>
@@ -225,13 +217,13 @@
                     <th scope="col">Task Start Date</th>
                     <th scope="col">Status</th>
                     <th scope="col">Last Updated On</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col" allign="center">Actions</th>
                   </tr>
                 </thead>
                 <tbody id="task_table">
                     
                 </tbody>
-              </table>                            
+              </table>                             --}}
              
 </x-layout>                      
 {{-- title="{{$task->task_description}}class="text-gray-500 rounded-md  px-3 py-2 hover:bg-gray-700 hover:text-white
