@@ -38,32 +38,70 @@ $(document).ready(function(){
         e.preventDefault();
         var id = $(this).attr('data-id');
         $.ajax({
-          url:'edit',
-          type:'POST',
-          headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+          url:'fill',
+          type:'GET',
+          // headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
           data:{
-            // "_token":"{{csrf_token()}}",
+            // "_token":"{{csrf_token()}}",.modal-body.submitform.
             data:id
           },
           success:function(response){
-            console.log(response[0].users[0].id);
-            $('#submitform')[0].reset();
-            $('#username').val(response[0].task_name);
-            $('#about').val(response[0].task_description);
+            // alert(response);
+            console.log(response);
+            // var data = JSON.parse(response)
 
-            $('#taskstatus').val(response[0].current_status);
-            // $('#assignedto').val(response[0].id);
-            $('#priority').val(response[0].priority);
-            $('#role').val(response[0].users[0].id);
-            $('#datepicker1').val(response[0].deadline);
-            $('#createdate').val(response[0].created_at);
+            $('#submitform').html(response);
+            $('#submitform')[0].reset();
+            // $('#username').val(response[0].task_name);
+            // $('#about').val(response[0].task_description);
+
+            // $('#taskstatus').val(response[0].current_status);
+            // // $('#assignedto').val(response[0].id);
+            // $('#priority').val(response[0].priority);
+            // // $('#role').val(response[0].users[0].id);
+            // $('#datepicker1').val(response[0].deadline);
+            // $('#createdate').val(response[0].created_at);
             $('#actionModal').modal('show');
+            // $('#close').click(modal('hide'));
 
           }
         });
         // $('#full-id').text(id);
         // $('#actionModal').modal('show');
   });
+
+  $('#edit').click(function(e){
+    e.preventDefault();
+          var id = $(this).attr('data-id');
+          var name =  $(this).attr('username');
+          var desc = $(this).attr('about');
+          var status = $(this).attr('data-id');
+          var priority = $(this).attr('taskstatus');
+          // var file = respons;
+          var role =$(this).attr('assignedto');
+          var deadline = $(this).attr('priority');
+
+        $.ajax({
+          url:'fill',
+          type:'POST',
+          headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+          data:{
+            id:id,
+            name:name,
+            desc:desc,
+            status:status,
+            priority:priority,
+            role:role,
+            deadline:deadline
+
+          },
+          success:function(response)
+        });
+
+  });
+
+
+
     // fetchRecords();
   // $('#submitform').on('submit',function(e){
     
