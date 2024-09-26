@@ -37,6 +37,7 @@ $(document).ready(function(){
   $('.id').click(function(e) {
         e.preventDefault();
         var id = $(this).attr('data-id');
+        // console.log(id);
         $.ajax({
           url:'fill',
           type:'GET',
@@ -47,7 +48,7 @@ $(document).ready(function(){
           },
           success:function(response){
             // alert(response);
-            console.log(response);
+            // console.log(response);
             // var data = JSON.parse(response)
 
             $('#submitform').html(response);
@@ -63,7 +64,6 @@ $(document).ready(function(){
             // $('#createdate').val(response[0].created_at);
             $('#actionModal').modal('show');
             // $('#close').click(modal('hide'));
-
           }
         });
         // $('#full-id').text(id);
@@ -72,7 +72,7 @@ $(document).ready(function(){
 
   $('#edit').click(function(e){
     e.preventDefault();
-          var id = $(this).attr('data-id');
+          // var id = $(this).attr('data-id');
           var name =  $(this).attr('username');
           var desc = $(this).attr('about');
           var status = $(this).attr('data-id');
@@ -95,7 +95,9 @@ $(document).ready(function(){
             deadline:deadline
 
           },
-          success:function(response)
+          success:function(response){
+
+          }
         });
 
   });
