@@ -66,11 +66,11 @@ class AjaxController extends Controller
         $user = User::get();
         // dd([$task,$user]);
         // dd($task);{{ Carbon\Carbon::parse($article->expired_at)->format('Y-m-d') }}
-        return view('task-modal',['data'=>$task,'content'=>$user,'fill'=>$fill])->render();
+        return view('task-modal',['data'=>$task,'getAllUser'=>$user,'taskDetail'=>$fill])->render();
     }
 
     public function editData(Request $request){
-        dd($request);
+        // dd($request);
         $request->validate([
             // "taskname"=>"required",
             // "desc"=>"required",
@@ -80,9 +80,10 @@ class AjaxController extends Controller
         ]);
         $task = new task();                                          //calling object of Model for saving data
         $usertask = new usertasks();                                 //calling object of Model for saving data
-        $task->task_name =$request->taskname;
+        $task->task_name =$request->name;
         $task->task_description =$request->desc;
-        $task->attached_file =$request->file_upload;
+        $task->current_status = $request->status;
+        // $task->attached_file =$request->file_upload;
         $task->priority =$request->priority;
         // $enddateString = $request->enddate;
         // $date = Carbon::createFromFormat('m/d/Y', $enddateString);
@@ -90,8 +91,8 @@ class AjaxController extends Controller
         $now = Carbon::now();
         $task->updated_at= $now;
         $task->save();
-        $id = $request->taskid;
-        $usertask->user_id=$request->Role;           
+        $id = $request->id;
+        $usertask->user_id=$request->role;           
         $usertask->task_id = $id;
         
         

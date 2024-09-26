@@ -72,14 +72,15 @@ $(document).ready(function(){
 
   $('#edit').click(function(e){
     e.preventDefault();
-          // var id = $(this).attr('data-id');
+          // var id = $(this).attr('task-id');
+          var id = 13;
           var name =  $(this).attr('username');
           var desc = $(this).attr('about');
-          var status = $(this).attr('data-id');
-          var priority = $(this).attr('taskstatus');
+          var status = $(this).attr('taskstatus');
+          var priority = $(this).attr('priority');
           // var file = respons;
           var role =$(this).attr('assignedto');
-          var deadline = $(this).attr('priority');
+          var deadline = $(this).attr('deadline');
 
         $.ajax({
           url:'fill',
@@ -96,7 +97,7 @@ $(document).ready(function(){
 
           },
           success:function(response){
-
+            console.log(response);
           }
         });
 
