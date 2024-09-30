@@ -9,4 +9,5 @@ class progress extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    // kbhk
 }

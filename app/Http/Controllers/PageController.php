@@ -12,6 +12,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 
 class PageController extends Controller
@@ -54,11 +56,17 @@ class PageController extends Controller
         //          ->orderBy($sortColumn2, $direction2)
         //         ->get();
 
-        $task = task::with('users',)->get()->sortByDesc('deadline')->sortBy('users.name');
-        $user = User::all();
+        // $task = task::with('users',)->orderBy('deadline','desc')->orderBy('users.name','asc')->paginate(6);
+        // $task = task::with('users',)->paginate(6)->orderBy('deadline','desc')->orderBy('users.name','asc');
+        // $user = User::all();
         // dd([$task,$user]);
+        // $task = task::with('users',)->Paginator(6);
+        // dd(get_class($task));
         // dd($task);{{ Carbon\Carbon::parse($article->expired_at)->format('Y-m-d') }}
-        return view('welcome',['data'=>$task]);
+
+
+        $task = task::with('users',)->Paginate(15)->sortByDesc('deadline')->sortBy('users.name');
+        return view('welcome',['tasks'=>$task]);
 
         
         // dd($task->users);with('role')->
@@ -73,6 +81,21 @@ class PageController extends Controller
     //     return view ("feedback",compact("users"));
     //     //return view ('feedback'); 
     // }
+
+    public function table(){
+        // dd($id);
+        // $fill = task::with('users')->find($id);                                                  //calling Model and fetching Data
+        // return view('welcome',[task::with('users')->find($id),User::get()]);
+        // dd(task::with('users')->find($req));
+        // $task = task::with('users',)->get()->sortByDesc('deadline')->sortBy('users.name');
+        // $user = User::get();
+        $task = task::with('users',)->Paginate(15)->sortByDesc('deadline')->sortBy('users.name');
+
+        // dd([$task,$user]);
+        // dd($task);{{ Carbon\Carbon::parse($article->expired_at)->format('Y-m-d') }}
+        return view('task-table',['tasks'=>$task])->render();
+    }
+
     public function feedbackShow($id){
         // dd("value sent=",$id);
         $task = task::find($id);

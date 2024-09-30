@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\usertasks;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 class AjaxController extends Controller
 {
@@ -48,7 +49,7 @@ class AjaxController extends Controller
     else{
         echo "NOT SAVED!!";
     }
-}
+    }
 
     public function viewData(){
         $data = task::all();
@@ -66,7 +67,7 @@ class AjaxController extends Controller
         $user = User::get();
         // dd([$task,$user]);
         // dd($task);{{ Carbon\Carbon::parse($article->expired_at)->format('Y-m-d') }}
-        return view('task-modal',['data'=>$task,'getAllUser'=>$user,'taskDetail'=>$fill])->render();
+        return view('task-modal',['tasks'=>$task,'getAllUser'=>$user,'taskDetail'=>$fill])->render();
     }
 
     public function editData(Request $request){
