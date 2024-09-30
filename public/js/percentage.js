@@ -23,21 +23,35 @@
 
 $(document).ready(function() {
   $('.description').hover(function() { 
-      var description = $(this).attr('data-description');
-      $('#full-description').text(description);
-      $('#descModal').modal('show');
-  }, function() {
-
-      $('#descModal').modal('hide');
-  });
+    var description = $(this).attr('data-description');
+    $('#full-description').text(description);
+    $('#descModal').modal('show');
+}, function() {
+    $('#descModal').modal('hide');
 });
+});
+
+
+$(document).ready(function(){
+  $.ajax({
+    url:'show-tasktable',
+    type:'GET',
+    success:function(response){
+      $('#task-table').html(response);
+
+    }
+  })
+    
+});
+
+
 // attr('data-id')
 $(document).ready(function(){
 
   $('.id').click(function(e) {
         e.preventDefault();
         var id = $(this).attr('data-id');
-        // console.log(id);
+        console.log(id);
         $.ajax({
           url:'fill',
           type:'GET',
@@ -73,7 +87,7 @@ $(document).ready(function(){
   $('#edit').click(function(e){
     e.preventDefault();
           // var id = $(this).attr('task-id');
-          var id = 13;
+          var id = $(this).attr('task-id');
           var name =  $(this).attr('username');
           var desc = $(this).attr('about');
           var status = $(this).attr('taskstatus');
@@ -85,7 +99,7 @@ $(document).ready(function(){
         $.ajax({
           url:'fill',
           type:'POST',
-          headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+          // headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
           data:{
             id:id,
             name:name,
