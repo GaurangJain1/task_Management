@@ -9,33 +9,51 @@
     <p id="respanel"></p>
     <br>
     
-    
-    <div id="actionModal" class="modal fade-xl" tabindex="-1" role="dialog" >
-      
-                      <div class="modal-dialog" role="document">
-                          <div class="modal-content" style="margin-left: -129px;width:150%;">
-                              <div class="modal-header">
-                                  <h5 class="modal-title">All Details</h5>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true" id ="close">&times;</span>
-                                  </button>
-                              </div>
-                              <div class="modal-body" style="word-wrap: break-word;">
-                                  
-                                  <form  id="submitform">
-                                      
-                                      {{-- @include('task-modal'); --}}
-                                        
-                                  </form>
-                      </div>
-                      
-                            
-                  {{-- <div class="task_description">
-                      <p></p> --}}
-                  </div>
-              </div>
+    <!-- Modal -->
+<div id="descModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Full Description</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
           </div>
-    </div>                   
+          <div class="modal-body" style="word-wrap: break-word;">
+              <p id="full-description"></p>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div id="actionModal" class="modal fade-xl" tabindex="-1" role="dialog" >
+    
+  <div class="modal-dialog" role="document">
+      <div class="modal-content" style="margin-left: -129px;width:150%;">
+          <div class="modal-header">
+              <h5 class="modal-title">All Detailsssss</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true" id ="close">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body" style="word-wrap: break-word;">
+              
+              <form  id="submitform" method="POST">
+                  
+                  {{-- @include('task-modal'); --}}
+                    
+              </form>
+  </div>
+  
+        
+{{-- <div class="task_description">
+  <p></p> --}}
+</div>
+</div>
+</div>
+</div> 
+
+                      
             {{-- @foreach($data as $task)
             
                         @foreach ($task->users as $user)
@@ -48,7 +66,7 @@
             <div id="task-table">
                  
             </div>
-
+            
 
               {{-- <nav aria-label="Page navigation example" style="margin-left: auto;">
                 <ul class="pagination">

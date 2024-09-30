@@ -65,8 +65,8 @@ class PageController extends Controller
         // dd($task);{{ Carbon\Carbon::parse($article->expired_at)->format('Y-m-d') }}
 
 
-        $task = task::with('users',)->Paginate(15)->sortByDesc('deadline')->sortBy('users.name');
-        return view('welcome',['tasks'=>$task]);
+        // $task = task::with('users',)->Paginate(15)->sortByDesc('deadline')->sortBy('users.name');
+        return view('welcome');
 
         
         // dd($task->users);with('role')->
@@ -89,8 +89,11 @@ class PageController extends Controller
         // dd(task::with('users')->find($req));
         // $task = task::with('users',)->get()->sortByDesc('deadline')->sortBy('users.name');
         // $user = User::get();
-        $task = task::with('users',)->Paginate(15)->sortByDesc('deadline')->sortBy('users.name');
-
+        $task = task::with('users')->paginate(8);
+        // $task->withPath('/welcome');
+        // dd($task);
+        // $task = $taskP;
+        // dd($task);
         // dd([$task,$user]);
         // dd($task);{{ Carbon\Carbon::parse($article->expired_at)->format('Y-m-d') }}
         return view('task-table',['tasks'=>$task])->render();
@@ -167,7 +170,7 @@ class PageController extends Controller
         return redirect(route("feedback"))->with("error","failed to create task");
     }
     public function showEmployee(){
-        $users = User::with('getrole')->get();
+        $users = User::with('getrole')->paginate(5);
         // dd($users);
         return view('showEmployee',['data'=>$users]);
     }

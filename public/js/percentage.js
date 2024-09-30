@@ -1,4 +1,4 @@
-
+new DataTable('#example');
 
 // const button = document.querySelector('.btn btn primary float-end');
 
@@ -21,34 +21,12 @@
 
 // .data('delete-link')  show.bs.modal
 
-$(document).ready(function() {
-  $('.description').hover(function() { 
-    var description = $(this).attr('data-description');
-    $('#full-description').text(description);
-    $('#descModal').modal('show');
-}, function() {
-    $('#descModal').modal('hide');
-});
-});
-
-
+// $(document).ready(function() {
+  
+// });
 $(document).ready(function(){
-  $.ajax({
-    url:'show-tasktable',
-    type:'GET',
-    success:function(response){
-      $('#task-table').html(response);
-
-    }
-  })
-    
-});
-
-
-// attr('data-id')
-$(document).ready(function(){
-
-  $('.id').click(function(e) {
+      $('.id').click(function(e) {
+        console.log("hiiii");
         e.preventDefault();
         var id = $(this).attr('data-id');
         console.log(id);
@@ -82,39 +60,67 @@ $(document).ready(function(){
         });
         // $('#full-id').text(id);
         // $('#actionModal').modal('show');
+      });
+});
+
+$(document).ready(function(){
+  $.ajax({
+    url:'show-tasktable',
+    type:'GET', 
+    success:function(response){
+      $('#task-table').html(response);
+
+    }
+  });
+  $('.description').hover(function() { 
+    console.log("hiiiiiiiiiiiiiiiiiii");
+    var description = $(this).attr('data-description');
+    $('#full-description').text(description);
+    $('#descModal').modal('show');
+    }, function() {
+        $('#descModal').modal('hide');
+    });
+
+
+$('#edit').click(function(e){
+e.preventDefault();
+    // var id = $(this).attr('task-id');
+    var id = $(this).attr('task-id');
+    var name =  $(this).attr('username');
+    var desc = $(this).attr('about');
+    var status = $(this).attr('taskstatus');
+    var priority = $(this).attr('priority');
+    // var file = respons;
+    var role =$(this).attr('assignedto');
+    var deadline = $(this).attr('deadline');
+
+  $.ajax({
+    url:'fill',
+    type:'POST',
+    // headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+    data:{
+      id:id,
+      name:name,
+      desc:desc,
+      status:status,
+      priority:priority,
+      role:role,
+      deadline:deadline
+
+    },
+    success:function(response){
+      console.log(response);
+    }
   });
 
-  $('#edit').click(function(e){
-    e.preventDefault();
-          // var id = $(this).attr('task-id');
-          var id = $(this).attr('task-id');
-          var name =  $(this).attr('username');
-          var desc = $(this).attr('about');
-          var status = $(this).attr('taskstatus');
-          var priority = $(this).attr('priority');
-          // var file = respons;
-          var role =$(this).attr('assignedto');
-          var deadline = $(this).attr('deadline');
+    
+});
 
-        $.ajax({
-          url:'fill',
-          type:'POST',
-          // headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-          data:{
-            id:id,
-            name:name,
-            desc:desc,
-            status:status,
-            priority:priority,
-            role:role,
-            deadline:deadline
 
-          },
-          success:function(response){
-            console.log(response);
-          }
-        });
+// attr('data-id')
+$(document).ready(function(){
 
+  
   });
 
 
@@ -223,4 +229,8 @@ $(document).ready(function(){
 //     // console.log(idAsArray)
 //   });
 // });
+
+
+
+
 

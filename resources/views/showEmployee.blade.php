@@ -29,5 +29,6 @@
             </li>
         @endforeach
       </ul>
-
+      {{$data}}
+      {{-- {{$data->links()}} --}}
 </x-layout>
