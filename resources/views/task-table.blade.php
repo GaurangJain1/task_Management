@@ -1,7 +1,7 @@
-
+{{-- table-striped --}}
 
     
-  <table id="example" class="table table-striped" style="width:100%">
+  <table id="example" class="table" style="width:100%">
     <thead>
         <tr>
             <th scope="col">Sr.#</th>
@@ -20,7 +20,7 @@
             <th scope="col">Last Updated On</th>
             <th scope="col">Actions</th>
           </tr>
-    </thead>
+        </thead>
     <tbody>
         @foreach($tasks as $task)
             <tr>
@@ -54,7 +54,8 @@
     
 </table>
   <div class="my-4">
-    {{$tasks->links()}}
+    {{-- {{$tasks->links()}} --}}
+    {{ $tasks->appends(Request::all())->links() }}
   </div>
 
   

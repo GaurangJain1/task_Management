@@ -64,22 +64,24 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
+  console.log("hop");
   $.ajax({
     url:'show-tasktable',
     type:'GET', 
     success:function(response){
-      $('#task-table').html(response);
-
+      
+      $('.description').click(function() { 
+        console.log("hiiiiiiiiiiiiiiiiiii");
+        var description = $(this).attr('data-description');
+        $('#full-description').text(description);
+        $('#descModal').modal('show');
+        }, function() {
+            $('#descModal').modal('hide');
+        });
+        $('#task-table').html(response);
     }
   });
-  $('.description').hover(function() { 
-    console.log("hiiiiiiiiiiiiiiiiiii");
-    var description = $(this).attr('data-description');
-    $('#full-description').text(description);
-    $('#descModal').modal('show');
-    }, function() {
-        $('#descModal').modal('hide');
-    });
+  
 
 
 $('#edit').click(function(e){
