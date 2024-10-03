@@ -24,43 +24,17 @@ new DataTable('#example');
 // $(document).ready(function() {
   
 // });
+
+// var description = $(this).attr('data-description');
+//     $('#full-description').text(description);
+//     $('#descModal').modal('show');
+//     }, function() {
+//         $('#descModal').modal('hide');
 $(document).ready(function(){
-      $('.id').click(function(e) {
-        console.log("hiiii");
-        e.preventDefault();
-        var id = $(this).attr('data-id');
-        console.log(id);
-        $.ajax({
-          url:'fill',
-          type:'GET',
-          // headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-          data:{
-            // "_token":"{{csrf_token()}}",.modal-body.submitform.
-            data:id
-          },
-          success:function(response){
-            // alert(response);
-            // console.log(response);
-            // var data = JSON.parse(response)
-
-            $('#submitform').html(response);
-            $('#submitform')[0].reset();
-            // $('#username').val(response[0].task_name);
-            // $('#about').val(response[0].task_description);
-
-            // $('#taskstatus').val(response[0].current_status);
-            // // $('#assignedto').val(response[0].id);
-            // $('#priority').val(response[0].priority);
-            // // $('#role').val(response[0].users[0].id);
-            // $('#datepicker1').val(response[0].deadline);
-            // $('#createdate').val(response[0].created_at);
-            $('#actionModal').modal('show');
-            // $('#close').click(modal('hide'));
-          }
-        });
-        // $('#full-id').text(id);
-        // $('#actionModal').modal('show');
-      });
+      // $('#close').click(function(){
+      //   $('#actionModal').empty();
+      // });
+      
 });
 
 $(document).ready(function(){
@@ -69,22 +43,52 @@ $(document).ready(function(){
     url:'show-tasktable',
     type:'GET', 
     success:function(response){
-      
-      $('.description').click(function() { 
-        console.log("hiiiiiiiiiiiiiiiiiii");
-        var description = $(this).attr('data-description');
-        $('#full-description').text(description);
-        $('#descModal').modal('show');
-        }, function() {
-            $('#descModal').modal('hide');
-        });
-        $('#task-table').html(response);
+        $('#task-table').prepend(response);
     }
   });
-  
+  $('.id').click(function(e) {
+    console.log("hiiii");
+    e.preventDefault();
+    var id = $(this).attr('data-id');
+    console.log(id);
+    $.ajax({
+      url:'fill',
+      type:'GET',
+      // headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+      data:{
+        // "_token":"{{csrf_token()}}",.modal-body.submitform.
+        data:id
+      },
+      success:function(response){
+        // alert(response);
+        // console.log(response);
+        // var data = JSON.parse(response)
 
+        $('#submitform').html(response);
+        $('#submitform')[0].reset();
+        // $('#username').val(response[0].task_name);
+        // $('#about').val(response[0].task_description);
+
+        // $('#taskstatus').val(response[0].current_status);
+        // // $('#assignedto').val(response[0].id);
+        // $('#priority').val(response[0].priority);
+        // // $('#role').val(response[0].users[0].id);
+        // $('#datepicker1').val(response[0].deadline);
+        // $('#createdate').val(response[0].created_at);
+        $('#actionModal').modal('show');
+        // $('#close').click(modal('hide'));
+      }
+    });
+    // $('#full-id').text(id);
+    // $('#actionModal').modal('show');
+  });
+  
+  $('#desc').click(function() { 
+    console.log("hiiiii");
+  });
 
 $('#edit').click(function(e){
+  console.log("kk");
 e.preventDefault();
     // var id = $(this).attr('task-id');
     var id = $(this).attr('task-id');

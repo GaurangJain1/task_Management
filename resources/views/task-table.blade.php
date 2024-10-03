@@ -27,7 +27,7 @@
                 <th scope="row">{{$task->task_id}}</th>
                 <td>{{ $task->task_name}}</td>
 
-                <td style="cursor: pointer;"><button type="button" data-description="{{ $task->task_description }}" class="description"  data-bs-toggle="modal" data-bs-target="#descModal">{{Str::limit($task->task_description,10)}}</button></td>
+                <td style="cursor: pointer;"><button type="button" data-description="{{ $task->task_description }}" class="description" id="desc"  data-bs-toggle="modal" data-bs-target="#descModal">{{Str::limit($task->task_description,10)}}</button></td>
                 <td>{{$task->priority}}</td>
                 <td >{{ Carbon\Carbon::parse($task->deadline)->format('m/d/Y h:i A') }}</td> 
                 
