@@ -89,7 +89,7 @@ class PageController extends Controller
         // dd(task::with('users')->find($req));
         // $task = task::with('users',)->get()->sortByDesc('deadline')->sortBy('users.name');
         // $user = User::get();
-        $task = task::with('users')->paginate(8);
+        $task = task::with('users')->paginate(15);
         // $task->withPath('/welcome');
         // dd($task);
         // $task = $taskP;
@@ -97,6 +97,7 @@ class PageController extends Controller
         // dd([$task,$user]);
         // dd($task);{{ Carbon\Carbon::parse($article->expired_at)->format('Y-m-d') }}
         return view('task-table',['tasks'=>$task])->render();
+        
     }
 
     public function feedbackShow($id){

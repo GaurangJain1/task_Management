@@ -26,21 +26,24 @@
                                 <form  id="submitform">
                                     @csrf --}}
                                     @csrf
+                                    @method('POST')
                                       <div class="border-b border-gray-900/10 pb-12" >
                                         <h2 class="text-base font-semibold leading-7 text-gray-900">Task Details</h2>  
                                         <p class="mt-1 text-sm leading-6 text-gray-600">This information will be used to create task. You can also Edit it afterwards.</p>
                                   
                                         {{-- {{-- <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"> --}}
                                           {{-- <div class="sm:col-span-4"> --}}
-                                            <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Task id</label>
-                                            <p id="task-id"></p>
+                                            <label for="taskid" class="block text-sm font-medium leading-6 text-gray-900">Task id</label>
+                                            {{-- <p id="task-id"></p> --}}
+                                            <input type="text" name="taskid" id="task-id" autocomplete="username" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="{{$taskDetail[0]->task_id}}" >
+
                                             
                                           <div class="sm:col-span-4">
-                                            <label for="username" class="block text-sm font-medium leading-6 text-gray-900" >Task Name</label>
+                                            <label for="taskname" class="block text-sm font-medium leading-6 text-gray-900" >Task Name</label>
                                             <div class="mt-2">
                                               <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                                 <span class="flex select-none items-center pl-3 text-gray-500 sm:text-sm"></span>
-                                                <input type="text" name="taskname" id="username" autocomplete="username" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="{{$taskDetail[0]->name}}" >
+                                                <input type="text" name="taskname" id="taskname" autocomplete="username" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="{{$taskDetail[0]->task_name}}" >
                                               </div>
                                             </div>
                                           </div>
@@ -61,7 +64,7 @@
                                               </div>
                                             </div>
                                           </div>
-                                          @if(isset($taskDetail[0]->users[0])){
+                                          @if(isset($taskDetail[0]->users[0]))
                                                 <div class="sm:col-span-3">
                                                   <label for="priority" class="block text-sm font-medium leading-6 text-gray-900">Select User to Assign!!</label>
                                                   <div class="mt-2">
@@ -75,7 +78,7 @@
                                                       @endforeach
                                                     </select>
                                                   </div>
-                                          } 
+                                           
                                           @endif       
                                           </div>
                                           <div class="col-span-full">
@@ -110,7 +113,7 @@
                                             </div>
                                                 <div>
                                                 
-                                                  <p style="padding: 12px;">Due Date: <input type="text" name ="enddate" id="datepicker1" style="background-color: gainsboro;" value="{{$taskDetail[0]->deadline}}"></p>
+                                                  <p style="padding: 12px;">Due Date: <input  type="text" name ="enddate" id="datepicker1" style="background-color: gainsboro;" value="{{$taskDetail[0]->deadline}}"></p>
                                                   <p style="padding: 12px;">Task Creates At: <input type="text" name ="enddate" id="createdate" style="background-color: gainsboro;" value="{{$taskDetail[0]->created_at}}"></p>
                                                 </div>
                                             <label class = "roleminus" for="roleminus">
@@ -120,8 +123,8 @@
                                             </label>
                                             <div class="mt-6 flex items-center justify-end gap-x-6">
                                               {{-- <button id="close" type="button" class="text-sm font-semibold leading-6 text-gray-900">Seen!</button> --}}
-                                              <button type="submit" class="rounded-md bg-green-300 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-100">Close!</button>
-                                              <button id ="edit"type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Edit!</button>
+                                              {{-- <button type="submit" class="rounded-md bg-green-300 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-100">Close!</button> --}}
+                                              <button id ="edit" type= "submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Make Changes!</button>
                                             </div>
                                           {{-- </form>
                                         </div>

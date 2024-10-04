@@ -38,7 +38,8 @@ Route::get('show-tasktable',[PageController::class,'table'])->name("showtasktabl
 Route::get('getData',[AjaxController::class,'viewData'])
 ->middleware(Check::class);
 Route::get('fill',[AjaxController::class,'fillData']);
-Route::post('edit',[AjaxController::class,'editData'])->middleware(Check::class);;
+Route::post('edit/task',[AjaxController::class,'editData'])->name('taskEdit');    //to edit  from modal
+// Route::post('plzchlja',[AjaxController::class,'editData']);
 // Route::post('vdata',[AjaxController::class,'viewData']);
 Route::get('/about',[PageController::class,'check'])->middleware(Check::class);
 Route::get('/contact',[PageController::class,'feedback'])->name('feedback')->middleware(Check::class);

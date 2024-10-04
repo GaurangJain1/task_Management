@@ -71,7 +71,8 @@ class AjaxController extends Controller
     }
 
     public function editData(Request $request){
-        // dd($request);
+        //dd("hi");
+        // dd($request->data_name);
         $request->validate([
             // "taskname"=>"required",
             // "desc"=>"required",
@@ -79,28 +80,28 @@ class AjaxController extends Controller
             // "priority"=>"required",
             // "enddate"=>"required"
         ]);
+        // dd($request->all());
         $task = new task();                                          //calling object of Model for saving data
         $usertask = new usertasks();                                 //calling object of Model for saving data
-        $task->task_name =$request->name;
-        $task->task_description =$request->desc;
-        $task->current_status = $request->status;
+        $task->task_name =$request->data_name;
+        $task->task_description =$request->data_desc;
+        $task->current_status = $request->data_status;
         // $task->attached_file =$request->file_upload;
-        $task->priority =$request->priority;
+        $task->priority =$request->data_priority;
         // $enddateString = $request->enddate;
         // $date = Carbon::createFromFormat('m/d/Y', $enddateString);
         // $task->deadline= $date;
         $now = Carbon::now();
         $task->updated_at= $now;
-        $task->save();
-        $id = $request->id;
-        $usertask->user_id=$request->role;           
-        $usertask->task_id = $id;
+        // $id = $request->task_id;
+        // $usertask->user_id=$request->user_role;           
+        // $usertask->task_id = $id;$usertask->save()        
         
         
-        if($usertask->save()){
-            return redirect(route("showtask") )->with("success","task created successfully");
+        if($task->save()){
+            return redirect(route("task") )->with("success","task created successfully");
         }
-        return redirect(route("feedback"))->with("error","failed to create task");
+        return redirect(route("showEmp"))->with("error","failed to create task");
     }
 
     

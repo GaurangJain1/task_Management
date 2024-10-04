@@ -49,13 +49,14 @@
             </tr>
             
         @endforeach
+        
        
     </tbody>
-    
+    <tr class="exam_pagin_link">
+      <td colspan="6" style="align: center"> {{$tasks->links()}}  </td>
+      {{-- {{ $tasks->appends(Request::all())->links() }} --}}
+    </tr>
 </table>
-  <div class="my-4">
-    {{-- {{$tasks->links()}} --}}
-    {{ $tasks->appends(Request::all())->links() }}
-  </div>
+  
 
   
