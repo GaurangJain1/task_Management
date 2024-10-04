@@ -81,8 +81,9 @@ class AjaxController extends Controller
             // "enddate"=>"required"
         ]);
         // dd($request->all());
-        $task = new task();                                          //calling object of Model for saving data
+        $task = task::find($request->data_id);                       //calling object of Model for saving data
         $usertask = new usertasks();                                 //calling object of Model for saving data
+        // $task->task_id =$request->data_id;
         $task->task_name =$request->data_name;
         $task->task_description =$request->data_desc;
         $task->current_status = $request->data_status;
@@ -96,12 +97,12 @@ class AjaxController extends Controller
         // $id = $request->task_id;
         // $usertask->user_id=$request->user_role;           
         // $usertask->task_id = $id;$usertask->save()        
+        $task->save();
         
-        
-        if($task->save()){
-            return redirect(route("task") )->with("success","task created successfully");
-        }
-        return redirect(route("showEmp"))->with("error","failed to create task");
+        // if($task->save()){
+        //     return redirect(route("task") )->with("success","task created successfully");
+        // }
+        // return redirect(route("showEmp"))->with("error","failed to create task");
     }
 
     
