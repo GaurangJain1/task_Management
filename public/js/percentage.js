@@ -53,7 +53,7 @@ function table(){                   //code to render table
 
 }
 
-function descModal(){
+function descModal(){                   //start of code for desc
   $('.description').hover(function(e){
     e.preventDefault();
     var description = $(this).attr('data-description');
@@ -197,12 +197,19 @@ $(document).ready(function(){           //loading of DOM document
   $('.btn-close').click(function(){
       $('#descModal').modal('hide');
       // table();
-      console.log("a1st");
+      // console.log("a1st");
   });
-  $('#close-actionModal').click(function(){
-      console.log("2ndd");
-      $('#actionModal').modal('hide');
-   });
+  $('.btn-close').click(function(){
+    $('#actionModal').modal('hide');
+    $('.modal-backdrop').remove();
+
+    // table();
+    // console.log("a1st");
+});
+  // $('#close-actionModal').click(function(){
+  //     // console.log("2ndd");
+  //     $('#actionModal').modal('hide');
+  //  });
 
 
 

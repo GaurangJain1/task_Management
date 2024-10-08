@@ -59,12 +59,12 @@
     </tbody>
     <tr class="exam_pagin_link">
       {{-- {{$tasks->links()}} --}}
-      {{-- <td colspan="6" style="align: center"> {{$tasks->links()}}</td> --}}
+      <td colspan="6" style="align: center"> {{$tasks->links()}}</td>
       
       {{-- {{ $tasks->appends(Request::all())->links() }} --}}
     </tr>
 </table>
-<nav aria-label="...">
+{{-- <nav aria-label="...">
   <ul class="pagination">
     <li class="page-item disabled">
       <a class="page-link">Previous</a>
@@ -78,6 +78,6 @@
       <a class="page-link" href="#">Next</a>
     </li>
   </ul>
-</nav>
+</nav> --}}
 
   
