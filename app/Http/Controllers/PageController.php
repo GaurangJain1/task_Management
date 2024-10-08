@@ -100,6 +100,8 @@ class PageController extends Controller
         // dd([$task,$user]);
         // dd($task);{{ Carbon\Carbon::parse($article->expired_at)->format('Y-m-d') }}
         return view('task-table',['tasks'=>$task])->render();
+        // return Redirect::back()->with(['tasks'=>$task]);
+
         
     }
 

@@ -10,7 +10,7 @@
     <br>
     
     <!-- Modal -->
-<div id="descModal" class="modal fade" tabindex="-1" role="dialog">
+<div id="descModal" class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
       <div class="modal-content">
           <div class="modal-header">
@@ -35,7 +35,7 @@
               {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close" id ="close-modal"> --}}
                   {{-- <span aria-hidden="true" style="position: relative" ><b> &times;</b></span> --}}
               {{-- </button> --}}
-              <button type="button" class="btn-close" aria-label="Close"></button>
+              <button type="button" id="close-actionModal" class="btn-close" aria-label="Close"></button>
           </div>
           <div class="modal-body" style="word-wrap: break-word;">
               

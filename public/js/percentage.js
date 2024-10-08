@@ -31,6 +31,84 @@
       // });
       
 // });
+
+// function() {
+//   $('#descModal').modal('hide');
+// }
+
+
+function table(){                   //code to render table
+  $.ajax({
+    url:'show-tasktable',
+    type:'GET', 
+    success:function(response){
+        $('#task-table').html(response);
+
+        descModal();
+
+        detailModal();
+
+    }
+  });
+
+}
+
+function descModal(){
+  $('.description').hover(function(e){
+    e.preventDefault();
+    var description = $(this).attr('data-description');
+      $('#full-description').text(description);
+      $('#descModal').modal('show');
+    });
+}
+function detailModal(){                 // start of code for prepopulating modal
+  $('.id').click(function() {
+    // e.preventDefault();
+    
+    console.log("up in detail");
+    
+    var id = $(this).attr('data-id');
+    console.log(id);
+    $.ajax({
+      url:'fill',
+      type:'GET',
+      // headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+      data:{
+        // "_token":"{{csrf_token()}}",.modal-body.submitform.
+        data:id
+      },
+      success:function(response){
+        // alert(response);
+        // console.log(response);
+        // var data = JSON.parse(response)
+
+        $('#submitform').html(response);
+
+        // calling of function for saving data
+        savedata();
+          
+
+
+
+        $('#submitform')[0].reset();
+        // $('#username').val(response[0].task_name);
+        // $('#about').val(response[0].task_description);
+
+        // $('#taskstatus').val(response[0].current_status);
+        // // $('#assignedto').val(response[0].id);
+        // $('#priority').val(response[0].priority);
+        // // $('#role').val(response[0].users[0].id);
+        // $('#datepicker1').val(response[0].deadline);
+        // $('#createdate').val(response[0].created_at);
+        // $('#actionModal').modal('show');
+        // $('#close').click(modal('hide'));
+        return;
+      }
+    });
+    // $('#full-id').text(id);
+    // $('#actionModal').modal('show');
+  });
+}
 function savedata(){
   $('#edit').click(function(e){                   // start of code for saving data
   // $('#submitform')[0].reset();
@@ -76,109 +154,64 @@ function savedata(){
     
         },
         success:function(response){
+          // console.log(response);
+          // $('#task-table').prepend(response);  
           loadtable();
           return;
         }
       });
     });
 }
-function loadtable(){                            //code for loading data in background
+function loadtable(){                 //code for loading data in background      
+  console.log("hi");
   $('#submitform')[0].reset();
+  // alert('hello2'); 
+  $('.modal-backdrop').remove();
+  // $('.modal-content').hide();
   $('#actionModal').modal('hide');
   $.ajax({
     url:'show-tasktable',
     type:'GET',
     success:function(response){
       $('#task-table').html(response);
+      detailModal();
+      // $('.id').click(function(){
+      //   console.log('insideeeee');
+      // });
       return;
     }
   });
 }
 
-function table(){                 //code to render table
-  $.ajax({
-    url:'show-tasktable',
-    type:'GET', 
-    success:function(response){
-        $('#task-table').html(response);
-
-        $('.description').hover(function(e){
-          e.preventDefault();
-          var description = $(this).attr('data-description');
-            $('#full-description').text(description);
-            $('#descModal').modal('show');
-            }, function() {
-            $('#descModal').modal('hide');
-        });
-
-        // start of code for prepopulating modal
-        $('.id').click(function() {
-          // e.preventDefault();
-          
-          console.log("hiiii");
-          
-          var id = $(this).attr('data-id');
-          console.log(id);
-          $.ajax({
-            url:'fill',
-            type:'GET',
-            // headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            data:{
-              // "_token":"{{csrf_token()}}",.modal-body.submitform.
-              data:id
-            },
-            success:function(response){
-              // alert(response);
-              // console.log(response);
-              // var data = JSON.parse(response)
-      
-              $('#submitform').html(response);
-
-              // calling of function for saving data
-              savedata();
-                
-
-
-
-              $('#submitform')[0].reset();
-              // $('#username').val(response[0].task_name);
-              // $('#about').val(response[0].task_description);
-      
-              // $('#taskstatus').val(response[0].current_status);
-              // // $('#assignedto').val(response[0].id);
-              // $('#priority').val(response[0].priority);
-              // // $('#role').val(response[0].users[0].id);
-              // $('#datepicker1').val(response[0].deadline);
-              // $('#createdate').val(response[0].created_at);
-              // $('#actionModal').modal('show');
-              // $('#close').click(modal('hide'));
-              return;
-            }
-          });
-          // $('#full-id').text(id);
-          // $('#actionModal').modal('show');
-        });
-
-    }
-  });
-
-}
-
-$(document).ready(function(){       //loading of DOM document
+$(document).ready(function(){           //loading of DOM document
   //call to render table
   table();
-  //call for pagination
-  $('#close-modal').click(function(){
-      console.log("catchedbef");
-      // table();
-      $('#actionModal').modal.hide();
-      console.log("catchedaft");
+  detailModal();
 
+
+  // $('.id').click(function() {
+  //   console.log("down after table()");
+  // });
+
+
+  $('.btn-close').click(function(){
+      $('#descModal').modal('hide');
+      // table();
+      console.log("a1st");
   });
-  $('#new-table').click(function(){
+  $('#close-actionModal').click(function(){
+      console.log("2ndd");
+      $('#actionModal').modal('hide');
+   });
+
+
+
+  $('#new-table').click(function(){             //call for pagination
     table();
   });
   
+
+
   $('#ch').click(function() { 
     console.log("hiiiii");
   });
