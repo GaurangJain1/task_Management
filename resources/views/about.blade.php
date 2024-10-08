@@ -52,6 +52,8 @@
         </tr>
         @endforeach
     </table> --}}
+    <label for="customRange1" class="form-label">Filter on basis of Percentage</label>
+        <input type="range" class="form-range" id="customRange1" value="0">
     <table class="table">
         <thead>
           <tr>

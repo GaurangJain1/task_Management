@@ -31,27 +31,90 @@
       // });
       
 // });
+function savedata(){
+  $('#edit').click(function(e){                   // start of code for saving data
+  // $('#submitform')[0].reset();
+  // $('#actionModal').modal('hide');
+    e.preventDefault();
+      //   var id = $(this).attr('task-id');
+      //   var name =  $(this).attr('username');
+      //   var desc = $(this).attr('about');
+      //   var status = $(this).attr('taskstatus');
+      //   var priority = $(this).attr('priority');
+      //   // var file = respons;
+      //   var role =$(this).attr('assignedto');
+      //   var deadline = $(this).attr('deadline');
+      
 
-$(document).ready(function(){
-  //code to render table
+        var id = $("#task-id").val();
+        var name =  $("#taskname").val();
+        var desc = $("#about").val();
+        var status = $("#taskstatus").val();
+        var priority = $("#priority").val();
+        var role =$("#role").val();
+        var deadline = $("#datepicker1").val();
+        // console.log(id);
+        console.log(name);
+        console.log(role);
+        // console.log(status);
+        $('#submitform')[0].reset();
+
+    
+      $.ajax({
+        url:"edit/task",
+        type:'POST',
+        // hasContent: true,
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        data:{
+          data_id:id,
+          data_name:name,
+          data_desc:desc,
+          data_status:status,
+          data_priority:priority,
+          user_role:role,
+          data_deadline:deadline
+    
+        },
+        success:function(response){
+          loadtable();
+          return;
+        }
+      });
+    });
+}
+function loadtable(){                            //code for loading data in background
+  $('#submitform')[0].reset();
+  $('#actionModal').modal('hide');
+  $.ajax({
+    url:'show-tasktable',
+    type:'GET',
+    success:function(response){
+      $('#task-table').html(response);
+      return;
+    }
+  });
+}
+
+function table(){                 //code to render table
   $.ajax({
     url:'show-tasktable',
     type:'GET', 
     success:function(response){
         $('#task-table').html(response);
 
-        $('#about').hover(function(e){
+        $('.description').hover(function(e){
           e.preventDefault();
           var description = $(this).attr('data-description');
             $('#full-description').text(description);
             $('#descModal').modal('show');
-            // }, function() {
-        $('#descModal').modal('hide');
+            }, function() {
+            $('#descModal').modal('hide');
         });
 
         // start of code for prepopulating modal
         $('.id').click(function() {
           // e.preventDefault();
+          
           console.log("hiiii");
           
           var id = $(this).attr('data-id');
@@ -71,55 +134,11 @@ $(document).ready(function(){
       
               $('#submitform').html(response);
 
-              // start of code for saving data
-                $('#edit').click(function(e){
-                e.preventDefault();
-                  //   var id = $(this).attr('task-id');
-                  //   var name =  $(this).attr('username');
-                  //   var desc = $(this).attr('about');
-                  //   var status = $(this).attr('taskstatus');
-                  //   var priority = $(this).attr('priority');
-                  //   // var file = respons;
-                  //   var role =$(this).attr('assignedto');
-                  //   var deadline = $(this).attr('deadline');
-                  
+              // calling of function for saving data
+              savedata();
+                
 
-                    var id = $("#task-id").val();
-                    var name =  $("#taskname").val();
-                    var desc = $("#about").val();
-                    var status = $("#taskstatus").val();
-                    var priority = $("#priority").val();
-                    var role =$("#role").val();
-                    var deadline = $("#datepicker1").val();
-                    // console.log(id);
-                    console.log(name);
-                    console.log(desc);
-                    // console.log(status);
 
-                
-                  $.ajax({
-                    url:"edit/task",
-                    type:'POST',
-                    // hasContent: true,
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    data:{
-                      data_id:id,
-                      data_name:name,
-                      data_desc:desc,
-                      data_status:status,
-                      data_priority:priority,
-                      user_role:role,
-                      data_deadline:deadline
-                
-                    },
-                    success:function(response){
-                      // loadtable()
-                      console.log(response);
-                    }
-                  });
-                
-                    
-                });
 
               $('#submitform')[0].reset();
               // $('#username').val(response[0].task_name);
@@ -131,8 +150,9 @@ $(document).ready(function(){
               // // $('#role').val(response[0].users[0].id);
               // $('#datepicker1').val(response[0].deadline);
               // $('#createdate').val(response[0].created_at);
-              $('#actionModal').modal('show');
+              // $('#actionModal').modal('show');
               // $('#close').click(modal('hide'));
+              return;
             }
           });
           // $('#full-id').text(id);
@@ -140,6 +160,23 @@ $(document).ready(function(){
         });
 
     }
+  });
+
+}
+
+$(document).ready(function(){       //loading of DOM document
+  //call to render table
+  table();
+  //call for pagination
+  $('#close-modal').click(function(){
+      console.log("catchedbef");
+      // table();
+      $('#actionModal').modal.hide();
+      console.log("catchedaft");
+
+  });
+  $('#new-table').click(function(){
+    table();
   });
   
   $('#ch').click(function() { 

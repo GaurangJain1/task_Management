@@ -51,9 +51,9 @@
                                           <div class="col-span-full">
                                             <label for="about" class="block text-sm font-medium leading-6 text-gray-900">Task Description</label>
                                             <div class="mt-2">
-                                              <textarea id="about" name="desc" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" >{{$taskDetail[0]->task_description}}</textarea>
+                                              <textarea id="about" name="desc" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-lg ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" >{{$taskDetail[0]->task_description}}</textarea>
                                             </div>
-                                            <p class="mt-3 text-sm leading-6 text-gray-600">Please provide a short summary of the task.</p>
+                                            <p class="mt-3 text-sm leading-6 text-gray-600">Please provide a short summary of the task.</p>shadow-lg p-3 mb-5 bg-body-tertiary rounded
                                           </div>
                                           <div class="sm:col-span-4">
                                             <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Task Status</label>
@@ -66,19 +66,33 @@
                                           </div>
                                           @if(isset($taskDetail[0]->users[0]))
                                                 <div class="sm:col-span-3">
-                                                  <label for="priority" class="block text-sm font-medium leading-6 text-gray-900">Select User to Assign!!</label>
+                                                  <label for="priority" class="block text-sm font-medium leading-6 text-gray-900">User Assigned!!</label>
                                                   <div class="mt-2">
                                                     <select id="role" name="Role" autocomplete="country-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" value="{{$taskDetail[0]}}">
 
                                                       {{-- <option >PLZ SELECT</option> --}}
                                                       @foreach($getAllUser as $users)
-                                                        <option  value="{{ $users->id }}" @if($taskDetail[0]->users[0]->id === $users->id) {{ 'selected' }} @endif>{{$users->name}}</option>
+                                                        <option  value="{{ $users->id }}" @if($taskDetail[0]->users[0]->id === $users->id) {{ 'selected' }} @endif>{{$users->id}} - {{$users->name}}</option>
                                                         {{-- <option {{ $product->source_id == $source->id ? 'selected' : '' }} > {{ $source->name }} </option> --}}
                                                         {{-- <option {{{{$taskDetail[0]->users[0]->name}} == '{{$users->name}}' ? 'selected' : '' }}>{{$users->name}}</option> --}}
                                                       @endforeach
                                                     </select>
                                                   </div>
-                                           
+                                          @else  
+                                                <div class="sm:col-span-3">
+                                                  <label for="priority" class="block text-sm font-medium leading-6 text-gray-900">Select User to Assign!!</label>
+                                                  <div class="mt-2">
+                                                    <select id="role" name="Role" autocomplete="country-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" value="{{$taskDetail[0]}}">
+
+                                                      {{-- <option >PLZ SELECT</option> --}}
+                                                      <option></option>
+                                                      @foreach($getAllUser as $users)
+                                                        <option value="{{$users->id}}">{{$users->id}} - {{$users->name}}</option>
+                                                        {{-- <option {{ $product->source_id == $source->id ? 'selected' : '' }} > {{ $source->name }} </option> --}}
+                                                        {{-- <option {{{{$taskDetail[0]->users[0]->name}} == '{{$users->name}}' ? 'selected' : '' }}>{{$users->name}}</option> --}}
+                                                      @endforeach
+                                                    </select>
+                                                  </div>
                                           @endif       
                                           </div>
                                           <div class="col-span-full">

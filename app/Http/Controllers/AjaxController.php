@@ -83,6 +83,8 @@ class AjaxController extends Controller
         // dd($request->all());
         $task = task::find($request->data_id);                       //calling object of Model for saving data
         $usertask = new usertasks();                                 //calling object of Model for saving data
+        $usertask->task_id = $request->data_id;
+        $usertask->user_id = $request->user_role;
         // $task->task_id =$request->data_id;
         $task->task_name =$request->data_name;
         $task->task_description =$request->data_desc;
@@ -93,11 +95,13 @@ class AjaxController extends Controller
         // $date = Carbon::createFromFormat('m/d/Y', $enddateString);
         // $task->deadline= $date;
         $now = Carbon::now();
-        $task->updated_at= $now;
+        $task->updated_at= $now->setTimezone('Asia/Kolkata');
         // $id = $request->task_id;
         // $usertask->user_id=$request->user_role;           
         // $usertask->task_id = $id;$usertask->save()        
         $task->save();
+        // $usertask->save();
+        return;
         
         // if($task->save()){
         //     return redirect(route("task") )->with("success","task created successfully");

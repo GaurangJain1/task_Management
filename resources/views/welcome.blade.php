@@ -15,8 +15,8 @@
       <div class="modal-content">
           <div class="modal-header">
               <h5 class="modal-title">Full Description</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+              <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                  {{-- <span aria-hidden="true">&times;</span> --}}
               </button>
           </div>
           <div class="modal-body" style="word-wrap: break-word;">
@@ -32,9 +32,10 @@
       <div class="modal-content" style="margin-left: -129px;width:150%;">
           <div class="modal-header">
               <h5 class="modal-title">All Detailsssss</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true" id ="close">&times;</span>
-              </button>
+              {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close" id ="close-modal"> --}}
+                  {{-- <span aria-hidden="true" style="position: relative" ><b> &times;</b></span> --}}
+              {{-- </button> --}}
+              <button type="button" class="btn-close" aria-label="Close"></button>
           </div>
           <div class="modal-body" style="word-wrap: break-word;">
               

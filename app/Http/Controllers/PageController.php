@@ -87,9 +87,12 @@ class PageController extends Controller
         // $fill = task::with('users')->find($id);                                                  //calling Model and fetching Data
         // return view('welcome',[task::with('users')->find($id),User::get()]);
         // dd(task::with('users')->find($req));
-        // $task = task::with('users',)->get()->sortByDesc('deadline')->sortBy('users.name');
+        // $task = task::with('users',)->get()->sortByDesc('deadline')->sortBy('users.name');paginate(15)->orderBy('users.name')
         // $user = User::get();
-        $task = task::with('users')->paginate(15);
+
+        $task = task::with('users')->orderByDesc('updated_at','DESC')->paginate();
+        // dd($task);   
+        // $task = task::with('users')->get()->sortByDesc('updated_at')->sortBy('users.name');
         // $task->withPath('/welcome');
         // dd($task);
         // $task = $taskP;
