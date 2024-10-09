@@ -175,6 +175,12 @@ function loadtable(){                 //code for loading data in background
     success:function(response){
       $('#task-table').html(response);
       detailModal();
+      $('.description').hover(function(e){
+        e.preventDefault();
+        var description = $(this).attr('data-description');
+          $('#full-description').text(description);
+          $('#descModal').modal('show');
+        });
       // $('.id').click(function(){
       //   console.log('insideeeee');
       // });
@@ -213,9 +219,9 @@ $(document).ready(function(){           //loading of DOM document
 
 
 
-  $('#new-table').click(function(){             //call for pagination
-    table();
-  });
+  // $('#new-table').click(function(){             //call for pagination
+  //   table();
+  // });
   
 
 
@@ -224,7 +230,12 @@ $(document).ready(function(){           //loading of DOM document
   });
 
   
-  
+  $('.pagination a').on('click', function(event) {
+    preventDefault(event);
+    alert("hi");
+    console.log('ji');
+  });
+
   
 
 

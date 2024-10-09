@@ -67,8 +67,9 @@
        
            
             <div id="task-table" >
-                 
+              
             </div>
+            {{$tasks->links()}}
             {{-- @include('task-table'); --}}
             
             

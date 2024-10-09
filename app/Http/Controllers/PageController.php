@@ -66,7 +66,9 @@ class PageController extends Controller
 
 
         // $task = task::with('users',)->Paginate(15)->sortByDesc('deadline')->sortBy('users.name');
-        return view('welcome');
+        $task = task::with('users')->orderByDesc('updated_at','DESC')->paginate();
+
+        return view('welcome',['tasks'=>$task]);
 
         
         // dd($task->users);with('role')->

@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\usertasks;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
+use DB;
 
 class AjaxController extends Controller
 {
@@ -58,21 +59,24 @@ class AjaxController extends Controller
         // dd($data);  
         return $data;
     }
-    public function fillData(Request $id){
+    public function fillData(Request $id){                  //function to fill the modal
         // dd($id);
-        $fill = task::with('users')->find($id);                                                  //calling Model and fetching Data
+        $fill = task::with('users')->find($id);                         //calling Model and fetching Data
+        // dd($fill[0]->users[0]->id);
         // return view('welcome',[task::with('users')->find($id),User::get()]);
         // dd(task::with('users')->find($req));
-        $task = task::with('users',)->get()->sortByDesc('deadline')->sortBy('users.name');
-        $user = User::get();
+        // $task = task::with('users',)->get()->sortByDesc('deadline')->sortBy('users.name');'tasks'=>$task,
+        $allUsers = User::get();
+        // $userAssigned = usertasks::get()->find($id,$fill->task_id); 
         // dd([$task,$user]);
         // dd($task);{{ Carbon\Carbon::parse($article->expired_at)->format('Y-m-d') }}
-        return view('task-modal',['tasks'=>$task,'getAllUser'=>$user,'taskDetail'=>$fill])->render();
+        return view('task-modal',['getAllUser'=>$allUsers,'taskDetail'=>$fill])->render();
     }
 
     public function editData(Request $request){
         //dd("hi");
         // dd($request->data_name);
+
         $request->validate([
             // "taskname"=>"required",
             // "desc"=>"required",
@@ -80,11 +84,8 @@ class AjaxController extends Controller
             // "priority"=>"required",
             // "enddate"=>"required"
         ]);
-        // dd($request->all());
         $task = task::find($request->data_id);                       //calling object of Model for saving data
-        $usertask = new usertasks();                                 //calling object of Model for saving data
-        $usertask->task_id = $request->data_id;
-        $usertask->user_id = $request->user_role;
+        
         // $task->task_id =$request->data_id;
         $task->task_name =$request->data_name;
         $task->task_description =$request->data_desc;
@@ -97,9 +98,59 @@ class AjaxController extends Controller
         $now = Carbon::now();
         $task->updated_at= $now->setTimezone('Asia/Kolkata');
         // $id = $request->task_id;
-        // $usertask->user_id=$request->user_role;           
-        // $usertask->task_id = $id;$usertask->save()        
+        // $usertask->user_id=$request->user_role; 
+        // $usertask->task_id = $id;$usertask->save()->users[0]->id
         $task->save();
+        $fill = task::with('users')->find($request->data_id);
+        // $f = task::with('usertasks')->find($request->data_id);
+        
+        
+        // dd();                  
+        // dd(isset($fill->users));
+        // dd($fill->users[0]->pivot->id);
+        // DB::enableQueryLog();
+       
+            // dd($pivotId);
+            // dd( DB::getQueryLog());
+        
+        if($fill->users->count() == 0){                     //u can also use exists() and isnotEmpty()
+            // dd("correct");
+            if(isset($request->user_role)){
+                $usertask = new usertasks();
+                $usertask->task_id = $request->data_id;
+                $usertask->user_id = $request->user_role;
+                $usertask->save();
+                return;
+            }
+            else{
+                // dd('empty');
+                return;
+            }
+            
+        }
+        // elseif( $a == $b){
+        //     return;
+        // }
+        else{                                       
+            $a=$request->user_role;
+            $b=$fill->users[0]->id; 
+            if( $a == $b){                             //Dodging attempt
+                // dd("c2");
+                return;
+            }
+            else{                                   //updation of user
+                // dd("c3");
+                $pivotId = DB::table('usertasks')
+                ->where('task_id', $request->data_id)
+                ->where('user_id', $fill->users[0]->id)
+                ->first()->id;
+                $usertask = usertasks::find($pivotId);                                 //calling object of Model for saving data
+                // $usertask->task_id = $request->data_id;
+                $usertask->user_id = $request->user_role;
+                $usertask->save();
+                return;
+            }
+        }
         // $usertask->save();
         return;
         

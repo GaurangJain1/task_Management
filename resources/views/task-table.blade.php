@@ -59,7 +59,7 @@
     </tbody>
     <tr class="exam_pagin_link">
       {{-- {{$tasks->links()}} --}}
-      <td colspan="6" style="align: center"> {{$tasks->links()}}</td>
+      {{-- <td colspan="6" style="align: center"> {{$tasks->links()}}</td> --}}
       
       {{-- {{ $tasks->appends(Request::all())->links() }} --}}
     </tr>
