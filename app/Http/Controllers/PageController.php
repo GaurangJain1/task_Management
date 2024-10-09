@@ -106,7 +106,9 @@ class PageController extends Controller
 
         
     }
-
+    public function arch(){
+        return view("archive");
+    }
     public function feedbackShow($id){
         // dd("value sent=",$id);
         $task = task::find($id);

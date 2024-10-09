@@ -56,6 +56,7 @@
                 <x-nav-link href="/welcome" >TASK  </x-nav-link>
                 <x-nav-link href="/about" >PROGRESS</x-nav-link>
                 <x-nav-link href="/history" >HISTORY</x-nav-link>
+                <x-nav-link href="/archive" >ARCHIVE</x-nav-link>
                 <x-nav-link href="/contact" >FEEDBACK & RATINGS</x-nav-link>
               </div>
             </div>

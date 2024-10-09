@@ -17,7 +17,7 @@
                         <div class="modal-getAllUser" style="margin-left: -129px;width:150%;">
                             <div class="modal-header">
                                 <h5 class="modal-title">All Detailssssssssssss</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">shadow-lg p-3 mb-5 bg-body-tertiary rounded
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -53,7 +53,7 @@
                                             <div class="mt-2">
                                               <textarea id="about" name="desc" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-lg ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" >{{$taskDetail[0]->task_description}}</textarea>
                                             </div>
-                                            <p class="mt-3 text-sm leading-6 text-gray-600">Please provide a short summary of the task.</p>shadow-lg p-3 mb-5 bg-body-tertiary rounded
+                                            <p class="mt-3 text-sm leading-6 text-gray-600">Please provide a short summary of the task.</p>
                                           </div>
                                           <div class="sm:col-span-4">
                                             <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Task Status</label>
@@ -64,6 +64,16 @@
                                               </div>
                                             </div>
                                           </div>
+                                          <div class="sm:col-span-3">
+                                            <label style="padding: 15px;"for="stature" class="block text-sm font-medium leading-6 text-gray-900">TASK STATURE (strong)</label>
+                                            <div class="mt-2" style="padding: 10px;">
+                                              <select id="stature" name="stature" autocomplete="country-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" >
+                                                <option {{ $taskDetail[0]->priority == 'High' ? 'selected' : '' }}>Completed</option>
+                                                <option {{ $taskDetail[0]->priority == 'Medium' ? 'selected' : '' }}>Hold</option>
+                                                <option {{ $taskDetail[0]->priority == 'Low' ? 'selected' : '' }}>Re-Assign</option>
+                                              </select>
+                                            </div>
+
                                           @if(isset($taskDetail[0]->users[0]))
                                                 <div class="sm:col-span-3">
                                                   <label for="priority" class="block text-sm font-medium leading-6 text-gray-900">User Assigned!!</label>
@@ -130,11 +140,11 @@
                                                   <p style="padding: 12px;">Due Date: <input  type="text" name ="enddate" id="datepicker1" style="background-color: gainsboro;" value="{{$taskDetail[0]->deadline}}"></p>
                                                   <p style="padding: 12px;">Task Creates At: <input type="text" name ="enddate" id="createdate" style="background-color: gainsboro;" value="{{$taskDetail[0]->created_at}}"></p>
                                                 </div>
-                                            <label class = "roleminus" for="roleminus">
+                                            {{-- <label class = "roleminus" for="roleminus">
                                                 <input type="checkbox" name="rolem" id="" value ="Assignee" >
                                                 <box-icon name='user'></box-icon>
                                                 Task Completed?
-                                            </label>
+                                            </label> --}}
                                             <div class="mt-6 flex items-center justify-end gap-x-6">
                                               {{-- <button id="close" type="button" class="text-sm font-semibold leading-6 text-gray-900">Seen!</button> --}}
                                               {{-- <button type="submit" class="rounded-md bg-green-300 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-100">Close!</button> --}}

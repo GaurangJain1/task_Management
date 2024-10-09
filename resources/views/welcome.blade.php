@@ -111,7 +111,7 @@
                     
                 </tbody>
               </table>                             --}}
-             <button id="ch">press</button>
+             
 </x-layout>                      
 {{-- title="{{$task->task_description}}class="text-gray-500 rounded-md  px-3 py-2 hover:bg-gray-700 hover:text-white
     rounded-md px-3 py-2 text-sm font-medium text-gray-300 " --}}

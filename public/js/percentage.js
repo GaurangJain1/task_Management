@@ -54,7 +54,7 @@ function table(){                   //code to render table
 }
 
 function descModal(){                   //start of code for desc
-  $('.description').hover(function(e){
+  $('.description').click(function(e){
     e.preventDefault();
     var description = $(this).attr('data-description');
       $('#full-description').text(description);
@@ -175,12 +175,12 @@ function loadtable(){                 //code for loading data in background
     success:function(response){
       $('#task-table').html(response);
       detailModal();
-      $('.description').hover(function(e){
+      $('.description').click(function(e){
         e.preventDefault();
         var description = $(this).attr('data-description');
           $('#full-description').text(description);
           $('#descModal').modal('show');
-        });
+        }); 
       // $('.id').click(function(){
       //   console.log('insideeeee');
       // });
@@ -225,9 +225,7 @@ $(document).ready(function(){           //loading of DOM document
   
 
 
-  $('#ch').click(function() { 
-    console.log("hiiiii");
-  });
+
 
   
   $('.pagination a').on('click', function(event) {

@@ -16,7 +16,7 @@
             <th scope="col">Due Date</th>
             <th scope="col">Assigned to</th>
             <th scope="col">Task Start Date</th>
-            <th scope="col">Status</th>
+            <th scope="col">Status(marked by Assignee)</th>
             <th scope="col">Last Updated On</th>
             <th scope="col">Actions</th>
           </tr>
