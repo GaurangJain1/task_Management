@@ -9,6 +9,7 @@ use App\Models\User;
 // use App\Models\task;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class task extends Model
 {
@@ -36,6 +37,10 @@ class task extends Model
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class,'task_id','task_id');
+    }
+    public function stature(): HasOne
+    {
+        return $this->hasOne(stature::class,'task_id','task_id');
     }
 
 }

@@ -128,6 +128,7 @@ function savedata(){
         var name =  $("#taskname").val();
         var desc = $("#about").val();
         var status = $("#taskstatus").val();
+        var stature = $("#stature").val();
         var priority = $("#priority").val();
         var role =$("#role").val();
         var deadline = $("#datepicker1").val();
@@ -148,6 +149,7 @@ function savedata(){
           data_name:name,
           data_desc:desc,
           data_status:status,
+          data_stature:stature,
           data_priority:priority,
           user_role:role,
           data_deadline:deadline

@@ -8,6 +8,7 @@ use Carbon\Carbon;
 
 use App\Models\User;
 use App\Models\usertasks;
+use App\Models\stature;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use DB;
@@ -61,7 +62,11 @@ class AjaxController extends Controller
     }
     public function fillData(Request $id){                  //function to fill the modal
         // dd($id);
-        $fill = task::with('users')->find($id);                         //calling Model and fetching Data
+        $fill = task::with('users','stature')->whereHas('stature', function ($query) {
+            $query->where('stature', '=', 'Hold!')->orWhere('stature', '=', 'Re-Assign!')
+            ->orWhere('stature', '=', 'Assigned!');
+        })->orderByDesc('updated_at','DESC')->find($id);                         //calling Model and fetching Data
+        // dd($fill[0]->stature->stature);
         // dd($fill[0]->users[0]->id);
         // return view('welcome',[task::with('users')->find($id),User::get()]);
         // dd(task::with('users')->find($req));
@@ -75,7 +80,7 @@ class AjaxController extends Controller
 
     public function editData(Request $request){
         //dd("hi");
-        // dd($request->data_name);
+        // dd($request->data_stature);
 
         $request->validate([
             // "taskname"=>"required",
@@ -84,6 +89,8 @@ class AjaxController extends Controller
             // "priority"=>"required",
             // "enddate"=>"required"
         ]);
+        
+        
         $task = task::find($request->data_id);                       //calling object of Model for saving data
         
         // $task->task_id =$request->data_id;
@@ -104,7 +111,6 @@ class AjaxController extends Controller
         $fill = task::with('users')->find($request->data_id);
         // $f = task::with('usertasks')->find($request->data_id);
         
-        
         // dd();                  
         // dd(isset($fill->users));
         // dd($fill->users[0]->pivot->id);
@@ -113,6 +119,35 @@ class AjaxController extends Controller
             // dd($pivotId);
             // dd( DB::getQueryLog());
         
+
+        $statureId = DB::table('statures')
+        ->where('task_id', $request->data_id)
+        ->first()->id;
+        $stature_check = stature::find($statureId);
+        if($request->data_stature == $stature_check->stature){
+            // dd("correct");
+            exit;
+        }
+        else{
+            // DB::enableQueryLog();
+            $t_stature = stature::find($statureId);
+            // dd( DB::getQueryLog());
+            $t_stature->stature = $request->data_stature;
+            $now = Carbon::now();
+            $t_stature->updated_at= $now->setTimezone('Asia/Kolkata');
+            $t_stature->save();
+        }
+        $statureId = DB::table('statures')
+                ->where('task_id', $request->data_id)
+                ->first()->id;
+        // DB::enableQueryLog();
+        $t_stature = stature::find($statureId);
+        // dd( DB::getQueryLog());
+        $t_stature->stature = $request->data_stature;
+        $now = Carbon::now();
+        $t_stature->updated_at= $now->setTimezone('Asia/Kolkata');
+        $t_stature->save();
+
         if($fill->users->count() == 0){                     //u can also use exists() and isnotEmpty()
             // dd("correct");
             if(isset($request->user_role)){
@@ -126,7 +161,6 @@ class AjaxController extends Controller
                 // dd('empty');
                 return;
             }
-            
         }
         // elseif( $a == $b){
         //     return;

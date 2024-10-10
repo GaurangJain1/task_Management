@@ -66,8 +66,8 @@ class PageController extends Controller
 
 
         // $task = task::with('users',)->Paginate(15)->sortByDesc('deadline')->sortBy('users.name');
-        $task = task::with('users')->orderByDesc('updated_at','DESC')->paginate();
-
+        $task = task::with('users','stature')->orderByDesc('updated_at','DESC')->paginate();
+        // dd($task);
         return view('welcome',['tasks'=>$task]);
 
         
@@ -92,11 +92,13 @@ class PageController extends Controller
         // $task = task::with('users',)->get()->sortByDesc('deadline')->sortBy('users.name');paginate(15)->orderBy('users.name')
         // $user = User::get();
 
-        $task = task::with('users')->orderByDesc('updated_at','DESC')->paginate();
-        // dd($task);   
+        $task = task::with('users','stature')->whereHas('stature', function ($query) {
+            $query->where('stature', '=', 'Hold!')->orWhere('stature', '=', 'Re-Assign!')
+            ->orWhere('stature', '=', 'Assigned!');
+        })->orderByDesc('updated_at','DESC')->paginate();        // dd($task);   
         // $task = task::with('users')->get()->sortByDesc('updated_at')->sortBy('users.name');
         // $task->withPath('/welcome');
-        // dd($task);
+        // dd($task[0]->stature->stature);  
         // $task = $taskP;
         // dd($task);
         // dd([$task,$user]);
@@ -107,7 +109,11 @@ class PageController extends Controller
         
     }
     public function arch(){
-        return view("archive");
+        $task = task::with('users','stature')->whereHas('stature', function ($query) {
+            $query->where('stature', '=', 'Complete!');
+        })->orderByDesc('updated_at','DESC')->paginate();
+        // dd($task);
+        return view("archive",['tasks'=>$task]);
     }
     public function feedbackShow($id){
         // dd("value sent=",$id);

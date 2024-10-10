@@ -68,9 +68,10 @@
                                             <label style="padding: 15px;"for="stature" class="block text-sm font-medium leading-6 text-gray-900">TASK STATURE (strong)</label>
                                             <div class="mt-2" style="padding: 10px;">
                                               <select id="stature" name="stature" autocomplete="country-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" >
-                                                <option {{ $taskDetail[0]->priority == 'High' ? 'selected' : '' }}>Completed</option>
-                                                <option {{ $taskDetail[0]->priority == 'Medium' ? 'selected' : '' }}>Hold</option>
-                                                <option {{ $taskDetail[0]->priority == 'Low' ? 'selected' : '' }}>Re-Assign</option>
+                                                <option {{ $taskDetail[0]->stature->stature == 'Complete!' ? 'selected' : '' }}>Complete!</option>
+                                                <option {{ $taskDetail[0]->stature->stature == 'Hold!' ? 'selected' : '' }}>Hold!</option>
+                                                <option {{ $taskDetail[0]->stature->stature == 'Re-Assign!' ? 'selected' : '' }}>Re-Assign!</option>
+                                                <option {{ $taskDetail[0]->stature->stature == 'Assigned!' ? 'selected' : '' }}>Assign!</option>
                                               </select>
                                             </div>
 
@@ -80,7 +81,7 @@
                                                   <div class="mt-2">
                                                     <select id="role" name="Role" autocomplete="country-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" value="{{$taskDetail[0]}}">
 
-                                                      {{-- <option >PLZ SELECT</option> --}}
+                                                      {{-- <option >PLZ SELECT</option> 'Hold!','Complete!','Re-Assign!--}}
                                                       @foreach($getAllUser as $users)
                                                         <option  value="{{ $users->id }}" @if($taskDetail[0]->users[0]->id === $users->id) {{ 'selected' }} @endif>{{$users->id}} - {{$users->name}}</option>
                                                         {{-- <option {{ $product->source_id == $source->id ? 'selected' : '' }} > {{ $source->name }} </option> --}}

@@ -23,7 +23,7 @@
         </thead>
     <tbody>
         @foreach($tasks as $task)
-            <tr>
+            <tr @if($tasks[0]->stature->stature == "Hold!"){style="background-color: #f5e237;"}@endif>
                 <th scope="row">{{$task->task_id}}</th>
                 <td>{{ $task->task_name}}</td>
 
