@@ -132,6 +132,7 @@ function savedata(){
         var priority = $("#priority").val();
         var role =$("#role").val();
         var deadline = $("#datepicker1").val();
+        var comment = $("#comment").val();
         // console.log(id);
         console.log(name);
         console.log(role);
@@ -152,7 +153,8 @@ function savedata(){
           data_stature:stature,
           data_priority:priority,
           user_role:role,
-          data_deadline:deadline
+          data_deadline:deadline,
+          data_comment:comment
     
         },
         success:function(response){

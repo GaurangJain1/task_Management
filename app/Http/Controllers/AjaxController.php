@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\task;
 use App\Models\role;    
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\usertasks;
 use App\Models\stature;
@@ -62,10 +63,11 @@ class AjaxController extends Controller
     }
     public function fillData(Request $id){                  //function to fill the modal
         // dd($id);
-        $fill = task::with('users','stature')->whereHas('stature', function ($query) {
+        $fill = task::with('users','stature','comments')->whereHas('stature', function ($query) {
             $query->where('stature', '=', 'Hold!')->orWhere('stature', '=', 'Re-Assign!')
             ->orWhere('stature', '=', 'Assigned!');
         })->orderByDesc('updated_at','DESC')->find($id);                         //calling Model and fetching Data
+        // dd($fill[0]->comments);
         // dd($fill[0]->stature->stature);
         // dd($fill[0]->users[0]->id);
         // return view('welcome',[task::with('users')->find($id),User::get()]);
@@ -79,8 +81,8 @@ class AjaxController extends Controller
     }
 
     public function editData(Request $request){
-        //dd("hi");
-        // dd($request->data_stature);
+        // dd(Auth::user());
+        // dd($request->data_comment);
 
         $request->validate([
             // "taskname"=>"required",
@@ -90,7 +92,16 @@ class AjaxController extends Controller
             // "enddate"=>"required"
         ]);
         
-        
+        //SAVING COMMENT
+        $u = Auth::User();
+        $sender = $u->id;
+        // dd($sender);
+        $com = new Comment();
+        $com->comment = $request->data_comment;
+        $com->sender = $sender;
+        $com->task_id = $request->data_id;
+        $com->receiver = $request->user_role;
+        $com->save();
         $task = task::find($request->data_id);                       //calling object of Model for saving data
         
         // $task->task_id =$request->data_id;
@@ -137,17 +148,8 @@ class AjaxController extends Controller
             $t_stature->updated_at= $now->setTimezone('Asia/Kolkata');
             $t_stature->save();
         }
-        $statureId = DB::table('statures')
-                ->where('task_id', $request->data_id)
-                ->first()->id;
-        // DB::enableQueryLog();
-        $t_stature = stature::find($statureId);
-        // dd( DB::getQueryLog());
-        $t_stature->stature = $request->data_stature;
-        $now = Carbon::now();
-        $t_stature->updated_at= $now->setTimezone('Asia/Kolkata');
-        $t_stature->save();
-
+        
+        //SAVING USER!!!
         if($fill->users->count() == 0){                     //u can also use exists() and isnotEmpty()
             // dd("correct");
             if(isset($request->user_role)){
@@ -185,7 +187,7 @@ class AjaxController extends Controller
                 return;
             }
         }
-        // $usertask->save();
+        
         return;
         
         // if($task->save()){

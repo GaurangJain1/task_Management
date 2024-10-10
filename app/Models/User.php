@@ -36,6 +36,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(role::class,'user_id','id');
     }
+    // public function getcomment(): HasMany
+    // {
+    //     return $this->hasMany(role::class);
+    // }
     // public function comments(): HasMany
     // {
     //     return $this->hasMany(Comment::class,'id','id','');

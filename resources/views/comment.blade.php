@@ -12,14 +12,12 @@
             
                 <div class="sender">
                     <p>
-                        {{$comment->Sender}}
+                        {{$comment}}
                         <div class="message">
-                            {{$comment->comments}}
+                            {{-- {{$comment->comments}} --}}
                         </div>
                     </p>
                 </div>
-                
-
             </div>
             
             <div class="bottom">
@@ -27,13 +25,13 @@
                 <button type="submit"></button>
             </div>
         </div>
-        <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+        {{-- <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
             <p>
                 {{$comment->Receiver}}
                 <div class="message">
                     {{$comment->comments}}
                 </div>
             </p>
-        </div>
+        </div> --}}
     @endforeach
 </x-layout>

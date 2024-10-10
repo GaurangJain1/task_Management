@@ -38,6 +38,7 @@ class task extends Model
     {
         return $this->hasMany(Comment::class,'task_id','task_id');
     }
+
     public function stature(): HasOne
     {
         return $this->hasOne(stature::class,'task_id','task_id');
