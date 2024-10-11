@@ -166,11 +166,13 @@
         <!-- Your content -->
         
         
-        <x-table>
-          lets Test!!!
-        </x-table>
+        
         {{ $slot}}
-
+        <x-table>
+          <x-slot:name>
+            chl ja bhai!
+          </x-slot:name>  
+          <h4>Lets Test!!!</h4></x-table>
 
       </div>
     </main>
