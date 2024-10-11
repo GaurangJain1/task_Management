@@ -21,13 +21,27 @@
             <th scope="col">Actions</th>
           </tr>
         </thead>
+        {{-- @if ($taskDetail[0]->stature->stature == 'Hold!')
+        class="h-2.5 w-2.5 rounded-full bg-yellow-500"
+    @else
+        class="h-2.5 w-2.5 rounded-full bg-yellow-500"
+    @endif --}}
     <tbody>
         @foreach($tasks as $task)
-            <tr @if($tasks[0]->stature->stature == "Hold!"){style="background-color: #f5e237;"}@endif>
-                <th scope="row">{{$task->task_id}}</th>
-                <td>{{ $task->task_name}}</td>
-
-                <td style="cursor: pointer;"><button type="button" data-description="{{ $task->task_description }}" class="description" id="desc"  data-bs-toggle="modal" data-bs-target="#descModal">{{Str::limit($task->task_description,10)}}</button></td>
+            <tr >
+                <th scope="row" >{{$task->task_id}}</th>
+                <td>{{$task->task_name}}
+                  @if(($task->stature->stature) == 'Hold!')
+                          <div class="h-2.5 w-4.5 rounded-full bg-yellow-200"></div>
+                  @elseif(($task->stature->stature) == 'Re-Assign!')
+                          <div class="h-2.5 w-4.5 rounded-full bg-orange-200"></div>
+                  @else
+                          <div class="h-2.5 w-4.5 rounded-full bg-emerald-200"></div>
+                  @endif
+                </td>
+                
+                {{-- <td style="cursor: pointer;"><button type="button" data-description="{{ $task->task_description }}" class="description" id="desc"  data-bs-toggle="modal" data-bs-target="#descModal">{{Str::limit($task->task_description,10)}}</button></td> --}}
+                <td style="cursor: pointer;"><button type="button" class="id" data-id="{{$task->task_id}}" data-bs-toggle="modal" data-bs-target="#actionModal"  data-backdrop="false">{{Str::limit($task->task_description,10)}}</button></td>
                 <td>{{$task->priority}}</td>
                 <td >{{ Carbon\Carbon::parse($task->deadline)->format('m/d/Y h:i A') }}</td> 
                 
@@ -75,7 +89,7 @@
     </li>
     <li class="page-item"><a class="page-link" href="#">3</a></li>
     <li class="page-item">
-      <a class="page-link" href="#">Next</a>
+      <a class="page-link" href="#">Next</a                        >style="background-color: #f5e237;"
     </li>
   </ul>
 </nav> --}}

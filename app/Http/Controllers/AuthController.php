@@ -43,7 +43,7 @@ class AuthController extends Controller
     //          return redirect()->route("login");
     //         }
     //     }
-        // dd($request);
+        // dd($request->rolep);
         $credentials = $request->only("name","password");
         
         if(Auth::attempt($credentials)){

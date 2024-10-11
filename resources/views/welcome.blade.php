@@ -10,21 +10,21 @@
     <br>
     
     <!-- Modal -->
-<div id="descModal" class="modal" tabindex="-1" role="dialog">
+{{-- <div id="descModal" class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
       <div class="modal-content">
           <div class="modal-header">
               <h5 class="modal-title">Full Description</h5>
               <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                   {{-- <span aria-hidden="true">&times;</span> --}}
-              </button>
+              {{-- </button>
           </div>
           <div class="modal-body" style="word-wrap: break-word;">
               <p id="full-description"></p>
           </div>
       </div>
   </div>
-</div>
+</div> --}}
 
 <div id="actionModal" class="modal fade-xl" tabindex="-1" role="dialog" >
     

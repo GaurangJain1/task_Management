@@ -38,13 +38,14 @@
 
 
 function table(){                   //code to render table
+  console.log("ok?");
   $.ajax({
     url:'show-tasktable',
     type:'GET', 
     success:function(response){
         $('#task-table').html(response);
 
-        descModal();
+        // descModal();
 
         detailModal();
 
@@ -53,14 +54,14 @@ function table(){                   //code to render table
 
 }
 
-function descModal(){                   //start of code for desc
-  $('.description').click(function(e){
-    e.preventDefault();
-    var description = $(this).attr('data-description');
-      $('#full-description').text(description);
-      $('#descModal').modal('show');
-    });
-}
+// function descModal(){                   //start of code for desc
+//   $('.description').click(function(e){
+//     e.preventDefault();
+//     var description = $(this).attr('data-description');
+//       $('#full-description').text(description);
+//       $('#descModal').modal('show');
+//     });
+// }
 function detailModal(){                 // start of code for prepopulating modal
   $('.id').click(function() {
     // e.preventDefault();
@@ -179,12 +180,12 @@ function loadtable(){                 //code for loading data in background
     success:function(response){
       $('#task-table').html(response);
       detailModal();
-      $('.description').click(function(e){
-        e.preventDefault();
-        var description = $(this).attr('data-description');
-          $('#full-description').text(description);
-          $('#descModal').modal('show');
-        }); 
+      // $('.description').click(function(e){
+      //   e.preventDefault();
+      //   var description = $(this).attr('data-description');
+      //     $('#full-description').text(description);
+      //     $('#descModal').modal('show');
+      //   }); 
       // $('.id').click(function(){
       //   console.log('insideeeee');
       // });
@@ -194,14 +195,16 @@ function loadtable(){                 //code for loading data in background
 }
 
 $(document).ready(function(){           //loading of DOM document
+  // console.log("test");
   //call to render table
   table();
   detailModal();
 
 
-  // $('.id').click(function() {
-  //   console.log("down after table()");
-  // });
+  $('.id').click(function() {
+    console.log("might listen");
+    detailModal();
+  });
 
 
   $('.btn-close').click(function(){

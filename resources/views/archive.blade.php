@@ -7,7 +7,34 @@
     {{-- <div id="task-table" >
               
     </div> --}}
-    <table id="example" class="table" style="width:100%">
+    <div id="actionModal" class="modal fade-xl" tabindex="-1" role="dialog" >
+    
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="margin-left: -129px;width:150%;">
+                <div class="modal-header">
+                    <h5 class="modal-title">All Detailsssss</h5>
+                    {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close" id ="close-modal"> --}}
+                        {{-- <span aria-hidden="true" style="position: relative" ><b> &times;</b></span> --}}
+                    {{-- </button> --}}
+                    <button type="button" id="close-actionModal" class="btn-close" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="word-wrap: break-word;">
+                    
+                    <form  id="submitform" method="POST">
+                        
+                        {{-- @include('task-modal'); --}}
+                          
+                    </form>
+        </div>
+        
+              
+      {{-- <div class="task_description">
+        <p></p> --}}
+      </div>
+      </div>
+      </div>
+      </div> 
+      <table id="example" class="table" style="width:100%">
         <thead>
             <tr>
                 <th scope="col">Sr.#</th>
@@ -33,7 +60,8 @@
                     <th scope="row">{{$task->task_id}}</th>
                     <td>{{ $task->task_name}}</td>
     
-                    <td style="cursor: pointer;"><button type="button" data-description="{{ $task->task_description }}" class="description" id="desc"  data-bs-toggle="modal" data-bs-target="#descModal">{{Str::limit($task->task_description,10)}}</button></td>
+                    {{-- <td style="cursor: pointer;"><button type="button" data-description="{{ $task->task_description }}" class="description" id="desc"  data-bs-toggle="modal" data-bs-target="#descModal">{{Str::limit($task->task_description,10)}}</button></td> --}}
+                    <td style="cursor: pointer;"><button type="button" class="id" data-id="{{$task->task_id}}" data-bs-toggle="modal" data-bs-target="#actionModal"  data-backdrop="false">{{Str::limit($task->task_description,10)}}</button></td>
                     <td>{{$task->priority}}</td>
                     <td >{{ Carbon\Carbon::parse($task->deadline)->format('m/d/Y h:i A') }}</td> 
                     
@@ -71,3 +99,4 @@
         </tr>
     </table>
 </x-layout>
+

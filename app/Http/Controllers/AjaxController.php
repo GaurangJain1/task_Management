@@ -65,8 +65,11 @@ class AjaxController extends Controller
         // dd($id);
         $fill = task::with('users','stature','comments')->whereHas('stature', function ($query) {
             $query->where('stature', '=', 'Hold!')->orWhere('stature', '=', 'Re-Assign!')
-            ->orWhere('stature', '=', 'Assigned!');
+            ->orWhere('stature', '=', 'Created!');
         })->orderByDesc('updated_at','DESC')->find($id);                         //calling Model and fetching Data
+        // dd(count($fill[0]->comments));
+        // dd(isset($fill[0]->comments[0]));
+        // dd(isset($fill[0]->comments,$fill[0]));,$fill[0]
         // dd($fill[0]->comments);
         // dd($fill[0]->stature->stature);
         // dd($fill[0]->users[0]->id);
@@ -81,6 +84,7 @@ class AjaxController extends Controller
     }
 
     public function editData(Request $request){
+        // dd(isset($request->data_comment));
         // dd(Auth::user());
         // dd($request->data_comment);
 
@@ -91,17 +95,20 @@ class AjaxController extends Controller
             // "priority"=>"required",
             // "enddate"=>"required"
         ]);
-        
+
         //SAVING COMMENT
-        $u = Auth::User();
-        $sender = $u->id;
-        // dd($sender);
-        $com = new Comment();
-        $com->comment = $request->data_comment;
-        $com->sender = $sender;
-        $com->task_id = $request->data_id;
-        $com->receiver = $request->user_role;
-        $com->save();
+        if (isset($request->data_comment)) {
+            $u = Auth::User();
+            $sender = $u->id;
+            // dd($sender);
+            $com = new Comment();
+            $com->comment = $request->data_comment;
+            $com->sender = $sender;
+            $com->task_id = $request->data_id;
+            $com->receiver = $request->user_role;
+            $com->save();
+        }
+        
         $task = task::find($request->data_id);                       //calling object of Model for saving data
         
         // $task->task_id =$request->data_id;
@@ -119,7 +126,6 @@ class AjaxController extends Controller
         // $usertask->user_id=$request->user_role; 
         // $usertask->task_id = $id;$usertask->save()->users[0]->id
         $task->save();
-        $fill = task::with('users')->find($request->data_id);
         // $f = task::with('usertasks')->find($request->data_id);
         
         // dd();                  
@@ -130,16 +136,12 @@ class AjaxController extends Controller
             // dd($pivotId);
             // dd( DB::getQueryLog());
         
-
         $statureId = DB::table('statures')
         ->where('task_id', $request->data_id)
         ->first()->id;
         $stature_check = stature::find($statureId);
-        if($request->data_stature == $stature_check->stature){
+        if($request->data_stature != $stature_check->stature){
             // dd("correct");
-            exit;
-        }
-        else{
             // DB::enableQueryLog();
             $t_stature = stature::find($statureId);
             // dd( DB::getQueryLog());
@@ -147,9 +149,14 @@ class AjaxController extends Controller
             $now = Carbon::now();
             $t_stature->updated_at= $now->setTimezone('Asia/Kolkata');
             $t_stature->save();
+            // exit;
         }
+        // else{
+            
+        // }
         
         //SAVING USER!!!
+        $fill = task::with('users')->find($request->data_id);
         if($fill->users->count() == 0){                     //u can also use exists() and isnotEmpty()
             // dd("correct");
             if(isset($request->user_role)){

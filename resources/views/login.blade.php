@@ -43,10 +43,12 @@
             </div>
             <button type="submit" class="btn">Login</button>
             <div class="register-link">
-                <p>Don't have an Account? <a href="/register">Register</a></p>
+                <p>Don't have an Account? Contact Admin!</p>
 
             </div>
         </form>
     </div>
 </body>
 </html>
+
+{{-- <a href="/register">Register</a> --}}

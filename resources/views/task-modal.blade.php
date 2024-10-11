@@ -71,7 +71,7 @@
                                                 <option {{ $taskDetail[0]->stature->stature == 'Complete!' ? 'selected' : '' }}>Complete!</option>
                                                 <option {{ $taskDetail[0]->stature->stature == 'Hold!' ? 'selected' : '' }}>Hold!</option>
                                                 <option {{ $taskDetail[0]->stature->stature == 'Re-Assign!' ? 'selected' : '' }}>Re-Assign!</option>
-                                                <option {{ $taskDetail[0]->stature->stature == 'Assigned!' ? 'selected' : '' }}>Assigned!</option>
+                                                <option {{ $taskDetail[0]->stature->stature == 'Created!' ? 'selected' : '' }}>Created!</option>
                                               </select>
                                             </div>
 
@@ -141,27 +141,45 @@
                                                   <p style="padding: 12px;">Due Date: <input  type="text" name ="enddate" id="datepicker1" style="background-color: gainsboro;" value="{{$taskDetail[0]->deadline}}"></p>
                                                   <p style="padding: 12px;">Task Creates At: <input type="text" name ="enddate" id="createdate" style="background-color: gainsboro;" value="{{$taskDetail[0]->created_at}}"></p>
                                                 </div>
-                                                @php
-                                                    $n=count($taskDetail[0]->comments);
+                                                {{-- @php
+                                                    // $n=count($taskDetail[0]->comments);
                                                     
                                                 @endphp
                                                 
                                                 @while ($n > 0)
                                                     {{ "hi" }}
-                                                @endwhile
+                                                @endwhile --}}
                                                     
                                                 {{-- @endwhile --}}
-                                                {{-- @foreach($taskDetail[0]->comments) --}}
+                                                {{--  {{$taskDetail[0]->comments[0]->comment}}{{$taskDetail[0]->comments[1]->comment}}{{$taskDetail[0]->comments[2]->comment}}--}}
+                                                  
+                                                @if (isset($taskDetail[0]->comments[0]))
+                                                  @php
+                                                  $n= count($taskDetail[0]->comments) - 1;
+                                                  $m = 0;
+                                                  @endphp
                                                   <div class="col-span-full">
                                                     <label for="about" class="block text-sm font-medium leading-6 text-gray-900">All Messages!</label>
                                                     <div class="mt-2">
-                                                      <textarea id="messages" name="messages" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-lg ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" >{{$taskDetail[0]->comments[0]->comment}}{{$taskDetail[0]->comments[1]->comment}}{{$taskDetail[0]->comments[2]->comment}}</textarea>
+                                                      <textarea id="messages" name="messages" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-lg ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" > @while($n>=$m)->{{$taskDetail[0]->comments[$m++]->comment}}
+                                                         @endwhile
+                                                      </textarea>
+                                                      {{-- @php
+                                                          $n--;
+                                                      @endphp --}}
                                                     </div>
-                                                    {{-- <p class="mt-3 text-sm leading-6 text-gray-600">Please provide a short summary of the task.</p> --}}
                                                   </div>
-                                                {{-- @endforeach --}}
+
+                                                @else
+                                                <div class="col-span-full">
+                                                  <label for="about" class="block text-sm font-medium leading-6 text-gray-900">All Messages!</label>
+                                                  <div class="mt-2">
+                                                    <textarea id="messages" name="messages" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-lg ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" ></textarea>
+                                                  </div>
+                                                  {{-- <p class="mt-3 text-sm leading-6 text-gray-600">Please provide a short summary of the task.</p> --}}
+                                                </div>
+                                                @endif
                                                 <div class="sm:col-span-4">
-                                                  
                                                   <div class="mt-2">
                                                     <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                                       <span class="flex select-none items-center pl-3 text-gray-500 sm:text-sm" ><label for="commenting" class="block text-sm font-medium leading-6 text-gray-900">Send message!!</label></span>

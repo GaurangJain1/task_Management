@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\Check;
+use App\Http\Middleware\checkAdmin;
 use App\Http\Middleware\Checkifin;
 
 

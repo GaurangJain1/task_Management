@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
+use App\Models\stature;
+
 
 
 class PageController extends Controller
@@ -94,8 +96,9 @@ class PageController extends Controller
 
         $task = task::with('users','stature')->whereHas('stature', function ($query) {
             $query->where('stature', '=', 'Hold!')->orWhere('stature', '=', 'Re-Assign!')
-            ->orWhere('stature', '=', 'Assigned!');
-        })->orderByDesc('updated_at','DESC')->paginate();        // dd($task);   
+            ->orWhere('stature', '=', 'Created!');
+        })->orderByDesc('updated_at','DESC')->paginate();        
+        // dd($task->stature->stature);   
         // $task = task::with('users')->get()->sortByDesc('updated_at')->sortBy('users.name');
         // $task->withPath('/welcome');
         // dd($task[0]->stature->stature);  
@@ -112,6 +115,7 @@ class PageController extends Controller
         $task = task::with('users','stature')->whereHas('stature', function ($query) {
             $query->where('stature', '=', 'Complete!');
         })->orderByDesc('updated_at','DESC')->paginate();
+        
         // dd($task);
         return view("archive",['tasks'=>$task]);
     }
@@ -150,8 +154,7 @@ class PageController extends Controller
         // return $request->enddate;
         
         $task = new task();
-        $usertask = new usertasks();
-        $task->task_id =$request->taskid;
+        // $task->task_id =$request->taskid;
         $task->task_name =$request->taskname;
         $task->task_description =$request->desc;
         $task->attached_file =$request->file_upload;
@@ -166,11 +169,19 @@ class PageController extends Controller
         $task->updated_at= $now;
 
         $task->save();
-        $id = $request->taskid;
+        $id = $task->task_id;
         // dd($id);
-
+        $usertask = new usertasks();
         $usertask->user_id=$request->Role;           
         $usertask->task_id = $id;
+
+        $stature = new stature();
+        $stature->task_id = $id;
+        $stature->stature = "Created!";
+        $now = Carbon::now();
+        $stature->created_at= $now;
+        $stature->updated_at= $now;
+        $stature->save();
         
         
 
