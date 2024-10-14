@@ -39,11 +39,10 @@
           </div>
           <div class="modal-body" style="word-wrap: break-word;">
               
-              <form  id="submitform" method="POST">
-                  
-                  {{-- @include('task-modal'); --}}
-                    
-              </form>
+              <div id="submitform">
+                    {{-- @include('task-modal'); --}}
+              </div>
+              
   </div>
   
         

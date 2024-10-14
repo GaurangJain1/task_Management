@@ -83,6 +83,36 @@ class AjaxController extends Controller
         return view('task-modal',['getAllUser'=>$allUsers,'taskDetail'=>$fill])->render();
     }
 
+    //Show all Comments related to the perticular task in Modal
+    public function fillComment(Request $id){
+        $fill = task::with('comments')->find($id);
+        // dd($fill);
+        return view('task-modal-comment',['taskComments'=>$fill]);
+    }
+    //Comment to user who has been assigned the perticular Task
+    public function saveComment(Request $request){
+        $request->validate([
+
+        ]);
+        //SAVING COMMENT
+        if (isset($request->data_comment)) {
+            $u = Auth::User();
+            $sender = $u->id;
+            // dd($sender);
+            $com = new Comment();
+            $com->comment = $request->data_comment;
+            $com->sender = $sender;
+            $com->task_id = $request->data_id;
+            $com->receiver = $request->user_role;
+            $now = Carbon::now();
+            $com->created_at= $now->setTimezone('Asia/Kolkata');            
+            $com->updated_at= $now->setTimezone('Asia/Kolkata');
+            if($com->save()){
+                return response()->json(['success' => 'Your message here']);
+            }
+        }
+    }
+    //Edit Selected Task from Modal
     public function editData(Request $request){
         // dd(isset($request->data_comment));
         // dd(Auth::user());
@@ -106,6 +136,9 @@ class AjaxController extends Controller
             $com->sender = $sender;
             $com->task_id = $request->data_id;
             $com->receiver = $request->user_role;
+            $now = Carbon::now();
+            $com->created_at= $now->setTimezone('Asia/Kolkata');
+            $com->updated_at= $now->setTimezone('Asia/Kolkata');
             $com->save();
         }
         

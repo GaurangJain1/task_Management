@@ -57,7 +57,7 @@
                 <td >{{ Carbon\Carbon::parse($task->created_at)->format('m/d/Y h:i A') }}</td>
                 <td >{{$task->current_status}}</td>
                 {{-- <td style="opacity: 0.5;">Not Started</td> --}}
-                <td >{{ Carbon\Carbon::parse($task->updated_at)->format('m/d/Y h:i A') }}</td>
+                <td >{{ Carbon\Carbon::parse($task->updated_at)}}</td>
                 {{-- <td >{{$task->deadline}}</td> --}}
 
                  @foreach($task->comments as $user)

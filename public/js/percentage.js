@@ -36,7 +36,14 @@
 //   $('#descModal').modal('hide');
 // }
 
-
+function closeModal(){
+  $('#detailform')[0].reset();
+  // alert('hello2'); 
+  $('.modal-backdrop').remove();
+  // $('.modal-content').hide();
+  $('#actionModal').modal('hide');
+  return;
+}
 function table(){                   //code to render table
   console.log("ok?");
   $.ajax({
@@ -62,12 +69,69 @@ function table(){                   //code to render table
 //       $('#descModal').modal('show');
 //     });
 // }
+
+function sendComment(){                     //FUNCTION TO SEND COMMENT
+  $('#send-comment').click(function(e) {
+    e.preventDefault();
+    var id = $("#task-id").val();
+    var role =$("#role").val();
+    var comment = $("#comment").val();
+    
+    $.ajax({
+      url:"save/comments",
+      type:'POST',
+      // hasContent: true,
+      headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+      data:{
+        data_id:id,
+        user_role:role,
+        data_comment:comment
+  
+      },
+      success:function(response){
+      //   if(response.success) {
+      //     alert(response.success); // Display success message
+      // }
+        // console.log("hi");
+        $.ajax({
+          url:'fill/comments',
+          type:'GET',
+          data:{
+            data:id
+          },
+          success:function(response){
+            alert('huhuhu');
+            console.log('should come');
+            $('#comments').html(response);
+            alert('mmm');
+            sendComment();
+            return;
+
+          }
+        });
+        return;
+        // showComments();
+      }
+    });
+  });
+}
+function showComments(){
+  $.ajax({
+    url:'fill/comments',
+    type:'GET',
+    data:{
+      data:id
+    },
+    success:function(response){
+      console.log('should come');
+      $('#comments').html(response);
+      sendComment();
+    }
+  }); 
+}
 function detailModal(){                 // start of code for prepopulating modal
   $('.id').click(function() {
     // e.preventDefault();
-    
-    console.log("up in detail");
-    
     var id = $(this).attr('data-id');
     console.log(id);
     $.ajax({
@@ -79,19 +143,82 @@ function detailModal(){                 // start of code for prepopulating modal
         data:id
       },
       success:function(response){
+        
         // alert(response);
         // console.log(response);
         // var data = JSON.parse(response)
 
         $('#submitform').html(response);
+        console.log("up in detail");
+        // showComments();
 
+        $.ajax({
+          url:'fill/comments',
+          type:'GET',
+          data:{
+            data:id
+          },
+          success:function(response){
+            console.log('should come');
+            $('#comments').html(response);
+
+            //TRYING THROUGH FUNCTION CALLING
+            sendComment();
+            // $('#send-comment').click(function(e){
+            //   sendComment();
+            // });
+
+
+            // $('#send-comment').click(function(e) {
+             
+            //   e.preventDefault();
+            //   var id = $("#task-id").val();
+            //   var role =$("#role").val();
+            //   var comment = $("#comment").val();
+            //   // alert('hi'),
+            //   $.ajax({
+               
+            //     url:"save/comments",
+            //     type:'POST',
+            //     // hasContent: true,
+            //     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            //     data:{
+            //       data_id:id,
+            //       user_role:role,
+            //       data_comment:comment
+            
+            //     },
+            //     success:function(response){
+            //       console.log(response);
+            //       $.ajax({
+            //         url:'fill/comments',
+            //         type:'GET',
+            //         data:{
+            //           data:id
+            //         },
+            //         success:function(response){
+            //           console.log('should come');
+            //           $('#comments').html(response);
+            //         }
+            //       });
+            //       // showComments();
+            //     }
+            //   });
+            // });
+
+
+
+          }
+        });
+        // console.log('should come2');
         // calling of function for saving data
+       
+        // sendComment();  
+       
+
         savedata();
-          
 
-
-
-        $('#submitform')[0].reset();
+        $('#detailform')[0].reset();
         // $('#username').val(response[0].task_name);
         // $('#about').val(response[0].task_description);
 
@@ -138,9 +265,8 @@ function savedata(){
         console.log(name);
         console.log(role);
         // console.log(status);
-        $('#submitform')[0].reset();
+        // $('#detailform')[0].reset();
 
-    
       $.ajax({
         url:"edit/task",
         type:'POST',
@@ -169,11 +295,7 @@ function savedata(){
 }
 function loadtable(){                 //code for loading data in background      
   console.log("hi");
-  $('#submitform')[0].reset();
-  // alert('hello2'); 
-  $('.modal-backdrop').remove();
-  // $('.modal-content').hide();
-  $('#actionModal').modal('hide');
+  closeModal();
   $.ajax({
     url:'show-tasktable',
     type:'GET',

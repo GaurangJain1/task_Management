@@ -40,6 +40,8 @@ Route::get('show-tasktable',[PageController::class,'table'])->name("showtasktabl
 Route::get('getData',[AjaxController::class,'viewData'])
 ->middleware(Check::class);
 Route::get('fill',[AjaxController::class,'fillData']);
+Route::get('fill/comments',[AjaxController::class,'fillComment']);
+Route::post('save/comments',[AjaxController::class,'saveComment']);
 Route::post('edit/task',[AjaxController::class,'editData'])->name('taskEdit');    //to edit  from modal
 // Route::post('plzchlja',[AjaxController::class,'editData']);
 // Route::post('vdata',[AjaxController::class,'viewData']);
