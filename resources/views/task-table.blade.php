@@ -1,11 +1,14 @@
 {{-- table-striped --}}
 
-    
+{{-- THIS FILE IS USED FOR DISPLAY TASK TABLE ON WELCOME PAGE --}}
+
   <table id="example" class="table" style="width:100%">
     <thead>
         <tr>
             <th scope="col">Sr.#</th>
-            <th scope="col">Task Name
+            <th scope="col">Task Name<a data-toggle="modal"  data-target="#memo_status" >
+                <img src="https://d3kinlcl20pxwz.cloudfront.net/cart/info-circle.svg" alt="status info">
+                </a></span>
                 <span class="float-right">
                     <i class="fa fa-arrow-up"></i>
                     <i class="fa fa-arrow-down"></i>

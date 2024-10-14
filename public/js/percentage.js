@@ -169,7 +169,7 @@ function detailModal(){                 // start of code for prepopulating modal
             // });
 
 
-            // $('#send-comment').click(function(e) {
+            // $('#send-comment').click(function(e) {           //WITHOUT USING FUNCTION
              
             //   e.preventDefault();
             //   var id = $("#task-id").val();

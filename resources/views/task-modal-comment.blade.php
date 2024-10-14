@@ -1,3 +1,6 @@
+{{-- THIS FILE IS USED FOR DISPLAY COMMENT SECTION WHEN DETAIL MODAL POPS UP ON WELCOME PAGE --}}
+
+
 <div class="col-span-full">
     <label for="about" class="block text-sm font-medium leading-6 text-gray-900">All Messages!</label>
 @if (isset($taskComments[0]->comments[0]))

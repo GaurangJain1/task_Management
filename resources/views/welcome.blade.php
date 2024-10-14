@@ -1,3 +1,5 @@
+  {{-- THIS FILE IS USED FOR WELCOME VIEW --}}
+
   <x-layout>
     <x-slot:heading>
         HOME PAGE FOR ADMIN

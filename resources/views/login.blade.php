@@ -1,3 +1,5 @@
+{{-- THIS FILE IS USED LOGIN VIEW --}}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
