@@ -44,16 +44,38 @@ function closeModal(){
   $('#actionModal').modal('hide');
   return;
 }
+function pagination(){
+  $(document).on('click','.pagination a',function(e){
+    e.preventDefault();
+    var page = $(this).attr('href').split('page=')[1];
+    fetchTasks(page);
+  });
+  return;
+}
+function fetchTask(page){
+  $.ajax({
+    url:"/show-tasls?page=" + page,
+    success: function(data){
+      $('#task-table').html(data);
+      return;
+    }
+  });
+}
 function table(){                   //code to render table
-  console.log("ok?");
+  console.log("ok?##");
+  // var currentPage = 1; // Define the initial page
   $.ajax({
     url:'show-tasktable',
-    type:'GET', 
+    type:'GET',
+    // data: {
+    //   page: currentPage,
+    //   per_page: 5
+    // } ,
     success:function(response){
         $('#task-table').html(response);
-
+        // $('#pagination-links').html(response.pagination);
         // descModal();
-
+      //  pagination();
         detailModal();
 
     }
@@ -102,7 +124,7 @@ function sendComment(){                     //FUNCTION TO SEND COMMENT
           success:function(response){
             console.log('should come');
             $('#comments').html(response);
-            sendComment();
+              sendComment();
             return;
 
           }
@@ -284,8 +306,11 @@ function savedata(){
         },
         success:function(response){
           // console.log(response);
-          // $('#task-table').prepend(response);  
-          loadtable();
+          alert(response);
+          console.log(response);
+          $('#task-table').append(response);  
+          closeModal();
+          // loadtable();
           return;
         }
       });
@@ -318,6 +343,21 @@ $(document).ready(function(){           //loading of DOM document
   // console.log("test");
   //call to render table
   table();
+  pagination();
+  // function fetchTask(page){
+  //   $.ajax({
+  //     url:"/show-tasls?page=" + page,
+  //     success: function(data){
+  //       $('#task-table').html(data);
+  //     }
+  //   });
+  // }
+  // $(document).on('click','.pagination a',function(e){
+  //   e.preventDefault();
+  //   var page = $(this).attr('href').split('page=')[1];
+  //   fetchTasks(page);
+  // });
+  
   detailModal();
 
 

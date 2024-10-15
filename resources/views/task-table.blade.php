@@ -13,7 +13,7 @@
       <div class="modal-body">
         <div class="info">
           <div class="h-3.5 w-4 mb-2 rounded-full bg-yellow-200"></div>On-Hold!
-          <div class="h-3.5 w-4 mb-2 rounded-full bg-orange-200"></div>Re-Assigned!
+          <div class="h-3.5 w-4 mb-2 rounded-full bg-orange-500"></div>Re-Assigned!
           <div class="h-3.5 w-4 mb-2 rounded-full bg-emerald-200"></div>In-progress!
         </div>
       </div>
@@ -53,14 +53,14 @@
         class="h-2.5 w-2.5 rounded-full bg-yellow-500"
     @endif --}}
     <tbody>
-        @foreach($tasks as $task)
+        @foreach($tasks  as $task)
             <tr >
                 <th scope="row" >{{$task->task_id}}</th>
                 <td>{{$task->task_name}}
                   @if(($task->stature->stature) == 'Hold!')
                           <div class="h-2.5 w-4.5 rounded-full bg-yellow-200"></div>
                   @elseif(($task->stature->stature) == 'Re-Assign!')
-                          <div class="h-2.5 w-4.5 rounded-full bg-orange-200"></div>
+                          <div class="h-2.5 w-4.5 rounded-full bg-orange-500"></div>
                   @else
                           <div class="h-2.5 w-4.5 rounded-full bg-emerald-200"></div>
                   @endif
@@ -98,12 +98,14 @@
        
     </tbody>
     <tr class="exam_pagin_link">
-      {{-- {{$tasks->links()}} --}}
+      {{-- {{ $tasks->withPath('/welcome')->links() }} --}}
       {{-- <td colspan="6" style="align: center"> {{$tasks->links()}}</td> --}}
       
       {{-- {{ $tasks->appends(Request::all())->links() }} --}}
     </tr>
 </table>
+{{$tasks->links()}}
+
 {{-- <nav aria-label="...">
   <ul class="pagination">
     <li class="page-item disabled">

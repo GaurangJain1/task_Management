@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
@@ -68,9 +69,12 @@ class PageController extends Controller
 
 
         // $task = task::with('users',)->Paginate(15)->sortByDesc('deadline')->sortBy('users.name');
-        $task = task::with('users','stature')->orderByDesc('updated_at','DESC')->paginate();
+        $task = task::with('users','stature')->whereHas('stature', function ($query) {
+            $query->where('stature', '=', 'Hold!')->orWhere('stature', '=', 'Re-Assign!')
+            ->orWhere('stature', '=', 'Created!');
+        })->orderByDesc('updated_at','DESC')->paginate(5);
         // dd($task);
-        return view('welcome',['tasks'=>$task]);
+        return view('welcome');
 
         
         // dd($task->users);with('role')->
@@ -86,18 +90,28 @@ class PageController extends Controller
     //     //return view ('feedback'); 
     // }
 
-    public function table(){
+    public function table(Request $request){
         // dd($id);
         // $fill = task::with('users')->find($id);                                                  //calling Model and fetching Data
         // return view('welcome',[task::with('users')->find($id),User::get()]);
         // dd(task::with('users')->find($req));
         // $task = task::with('users',)->get()->sortByDesc('deadline')->sortBy('users.name');paginate(15)->orderBy('users.name')
         // $user = User::get();
-
+        // DB::enableQueryLog();
+        // $page = $request->input('page', 1);
+        // $perPage = $request->input('per_page', 5);
+     
         $task = task::with('users','stature')->whereHas('stature', function ($query) {
             $query->where('stature', '=', 'Hold!')->orWhere('stature', '=', 'Re-Assign!')
             ->orWhere('stature', '=', 'Created!');
-        })->orderByDesc('updated_at','DESC')->paginate();        
+        })->orderByDesc('updated_at','DESC')->paginate(5);      
+        if($request->ajax()){
+            return view('task-table',['tasks'=>$task])->render();
+        }  
+        return view('welcome',['tasks'=>$task]);
+
+        //  dd( DB::getQueryLog());
+
         // dd($task->stature->stature);   
         // $task = task::with('users')->get()->sortByDesc('updated_at')->sortBy('users.name');
         // $task->withPath('/welcome');
@@ -106,10 +120,10 @@ class PageController extends Controller
         // dd($task);
         // dd([$task,$user]);
         // dd($task);{{ Carbon\Carbon::parse($article->expired_at)->format('Y-m-d') }}
-        return view('task-table',['tasks'=>$task])->render();
+        // return view('task-table',['tasks'=>$task])->render();
+        // return response()->json(['tasks' => $tasks]);
+        return view('task-table',['tasks'=>$task]);
         // return Redirect::back()->with(['tasks'=>$task]);
-
-        
     }
     public function arch(){
         $task = task::with('users','stature')->whereHas('stature', function ($query) {
@@ -159,14 +173,14 @@ class PageController extends Controller
         $task->task_description =$request->desc;
         $task->attached_file =$request->file_upload;
         $task->priority =$request->priority;
+        $task->current_status = "Assigned";
         // $role->user_id =$request->user_id;
         $enddateString = $request->enddate;
         $date = Carbon::createFromFormat('m/d/Y', $enddateString);
         $task->deadline= $date;
         $now = Carbon::now();
-        $task->created_at= $now;
-        $now = Carbon::now();
-        $task->updated_at= $now;
+        $task->created_at= $now->setTimezone('Asia/Kolkata');
+        $task->updated_at= $now->setTimezone('Asia/Kolkata');
 
         $task->save();
         $id = $task->task_id;
@@ -179,11 +193,22 @@ class PageController extends Controller
         $stature->task_id = $id;
         $stature->stature = "Created!";
         $now = Carbon::now();
-        $stature->created_at= $now;
-        $stature->updated_at= $now;
+        $stature->created_at= $now->setTimezone('Asia/Kolkata');
+        $stature->updated_at= $now->setTimezone('Asia/Kolkata');
         $stature->save();
         
-        
+            $u = Auth::User();
+            $sender = $u->id;
+            // dd($sender);
+            $com = new Comment();
+            $com->comment = "THIS TASK IS ASSIGNED TO U!";
+            $com->sender = $sender;
+            $com->task_id = $id;
+            $com->receiver = $request->Role;
+            $now = Carbon::now();
+            $com->created_at= $now->setTimezone('Asia/Kolkata');            
+            $com->updated_at= $now->setTimezone('Asia/Kolkata');
+            $com->save();
 
         // $task->save();
         // return $task->task_name;

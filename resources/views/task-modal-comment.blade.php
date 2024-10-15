@@ -9,7 +9,7 @@ $n= count($taskComments[0]->comments) - 1;
 $m = 0;
 @endphp
   <div class="mt-2">
-    <textarea id="messages" name="messages" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-lg ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" > @while($n>=$m)->{{$taskComments[0]->comments[$m]->comment}}-{{($taskComments[0]->comments[$m++]->created_at->format('m/d/Y h:i A'))}}
+    <textarea id="messages" name="messages" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-lg ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" >@while($n>=$m)->{{$taskComments[0]->comments[$m]->comment}}-{{($taskComments[0]->comments[$m++]->created_at->format('m/d/Y h:i A'))}}
        @endwhile
     </textarea>
     {{-- @php

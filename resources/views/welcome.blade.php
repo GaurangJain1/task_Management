@@ -68,9 +68,32 @@
        
            
             <div id="task-table" >
-              
+              @if (isset($task))
+                  @include('task-table');
+              @endif
             </div>
-            {{$tasks->links()}}
+            <div id="pagination-links">
+
+            </div>
+
+            <script>
+                $(document).ready(function(){ 
+                      $(document).on('click','.pagination a',function(e){
+                        e.preventDefault();
+                        var page = $(this).attr('href').split('page=')[1];
+                        fetchTasks(page);
+                      });
+                      function fetchTask(page){
+                        $.ajax({
+                          url:"/show-tasls?page=" + page,
+                          success: function(data){
+                            $('#task-table').html(data);
+                          }
+                        });
+                      }
+                }):
+            </script>
+            {{-- {{$tasks->links()}} --}}
             {{-- @include('task-table'); --}}
             
             
