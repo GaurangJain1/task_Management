@@ -100,10 +100,8 @@ function sendComment(){                     //FUNCTION TO SEND COMMENT
             data:id
           },
           success:function(response){
-            alert('huhuhu');
             console.log('should come');
             $('#comments').html(response);
-            alert('mmm');
             sendComment();
             return;
 

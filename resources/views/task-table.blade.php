@@ -2,13 +2,36 @@
 
 {{-- THIS FILE IS USED FOR DISPLAY TASK TABLE ON WELCOME PAGE --}}
 
+<!-- Modal -->
+<div class="modal fade" id="colorinfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Color Coading Info!</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info">
+          <div class="h-3.5 w-4 mb-2 rounded-full bg-yellow-200"></div>On-Hold!
+          <div class="h-3.5 w-4 mb-2 rounded-full bg-orange-200"></div>Re-Assigned!
+          <div class="h-3.5 w-4 mb-2 rounded-full bg-emerald-200"></div>In-progress!
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
   <table id="example" class="table" style="width:100%">
     <thead>
         <tr>
             <th scope="col">Sr.#</th>
-            <th scope="col">Task Name<a data-toggle="modal"  data-target="#memo_status" >
-                <img src="https://d3kinlcl20pxwz.cloudfront.net/cart/info-circle.svg" alt="status info">
-                </a></span>
+            <th scope="col">Task Name<button type="button"  data-bs-toggle="modal" data-bs-target="#colorinfo">
+              <img src="https://d3kinlcl20pxwz.cloudfront.net/cart/info-circle.svg" alt="status info"></button>
+              {{-- <a data-toggle="modal"  data-bs-target="#colorinfo" >
+                
+                </a></span> --}}
                 <span class="float-right">
                     <i class="fa fa-arrow-up"></i>
                     <i class="fa fa-arrow-down"></i>

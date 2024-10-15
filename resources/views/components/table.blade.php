@@ -1,4 +1,4 @@
-<table id="example" class="table" style="width:100%">
+{{-- <table id="example" class="table" style="width:100%">
     <thead>
         <tr>
             <th scope="col"></th>
@@ -20,4 +20,4 @@
         
     </tbody>
 </table>
-<b><h1>{{$slot}}</h1></b>
+<b><h1>{{$slot}}</h1></b> --}}
