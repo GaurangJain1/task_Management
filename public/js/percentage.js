@@ -181,7 +181,7 @@ function detailModal(){                 // start of code for prepopulating modal
         console.log("up in detail");
         // showComments();
 
-        $.ajax({
+        $.ajax({                        //calling comment section
           url:'fill/comments',
           type:'GET',
           data:{
@@ -190,6 +190,8 @@ function detailModal(){                 // start of code for prepopulating modal
           success:function(response){
             console.log('should come');
             $('#comments').html(response);
+            const textarea = document.getElementById('messages');
+            textarea.scrollTop = textarea.scrollHeight;
 
             //TRYING THROUGH FUNCTION CALLING
             sendComment();
