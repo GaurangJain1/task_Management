@@ -68,15 +68,15 @@
        
            
             <div id="task-table" >
-              @if (isset($task))
-                  @include('task-table');
-              @endif
+              {{-- @if (isset($task)) --}}
+                  {{-- @include('task-table'); --}}
+              {{-- @endif --}}
             </div>
             <div id="pagination-links">
 
             </div>
 
-            <script>
+            {{-- <script>
                 $(document).ready(function(){ 
                       $(document).on('click','.pagination a',function(e){
                         e.preventDefault();
@@ -92,7 +92,7 @@
                         });
                       }
                 }):
-            </script>
+            </script> --}}
             {{-- {{$tasks->links()}} --}}
             {{-- @include('task-table'); --}}
             

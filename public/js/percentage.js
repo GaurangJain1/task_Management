@@ -44,19 +44,20 @@ function closeModal(){
   $('#actionModal').modal('hide');
   return;
 }
-function pagination(){
-  $(document).on('click','.pagination a',function(e){
-    e.preventDefault();
-    var page = $(this).attr('href').split('page=')[1];
-    fetchTasks(page);
-  });
-  return;
-}
-function fetchTask(page){
+// function pagination(){
+//   $(document).on('click','.pagination a',function(e){
+//     e.preventDefault();
+//     var page = $(this).attr('href').split('page=')[1];
+//     fetchTasks(page);
+//   });
+//   return;
+// }
+function fetchTasks(page){
   $.ajax({
-    url:"/show-tasls?page=" + page,
+    url:"/show-tasktable?page=" + page,
     success: function(data){
       $('#task-table').html(data);
+      detailModal();
       return;
     }
   });
@@ -76,6 +77,12 @@ function table(){                   //code to render table
         // $('#pagination-links').html(response.pagination);
         // descModal();
       //  pagination();
+      $(document).on('click','.pagination a',function(e){
+        e.preventDefault();
+        console.log("catchedd");
+        var page = $(this).attr('href').split('page=')[1];
+        fetchTasks(page);
+      });
         detailModal();
 
     }
@@ -111,6 +118,7 @@ function sendComment(){                     //FUNCTION TO SEND COMMENT
   
       },
       success:function(response){
+        loadtable();
       //   if(response.success) {
       //     alert(response.success); // Display success message
       // }
@@ -129,6 +137,7 @@ function sendComment(){                     //FUNCTION TO SEND COMMENT
 
           }
         });
+        // loadtable();
         return;
         // showComments();
       }
@@ -306,11 +315,11 @@ function savedata(){
         },
         success:function(response){
           // console.log(response);
-          alert(response);
-          console.log(response);
+          // alert(response);
+          // console.log(response);
           $('#task-table').append(response);  
           closeModal();
-          // loadtable();
+          loadtable();
           return;
         }
       });
@@ -318,7 +327,7 @@ function savedata(){
 }
 function loadtable(){                 //code for loading data in background      
   console.log("hi");
-  closeModal();
+  // closeModal();
   $.ajax({
     url:'show-tasktable',
     type:'GET',
@@ -343,7 +352,12 @@ $(document).ready(function(){           //loading of DOM document
   // console.log("test");
   //call to render table
   table();
-  pagination();
+  // pagination();
+  $(document).on('click','.pagination a',function(e){
+    e.preventDefault();
+    var page = $(this).attr('href').split('page=')[1];
+    fetchTasks(page);
+  });
   // function fetchTask(page){
   //   $.ajax({
   //     url:"/show-tasls?page=" + page,
