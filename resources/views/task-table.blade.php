@@ -40,7 +40,9 @@
             <th scope="col">Description</th>
             <th scope="col">Priority</th>
             <th scope="col">Due Date</th>
+            @can('isAdmin')
             <th scope="col">Assigned to</th>
+            @endcan
             <th scope="col">Task Start Date</th>
             <th scope="col">Status(marked by Assignee)</th>
             <th scope="col">Last Updated On</th>
@@ -71,14 +73,16 @@
                 <td>{{$task->priority}}</td>
                 <td >{{ Carbon\Carbon::parse($task->deadline)->format('m/d/Y h:i A') }}</td> 
                 
+                @can('isAdmin')
                   @if(isset($task->users[0]))  
-                      @foreach($task->users as $user)
-                        <td>{{$user->name}}</td>
-                      @endforeach
-                  @else
-                      <td style="opacity: 0.5;">User Not Assigned!</td>
+                        @foreach($task->users as $user)
+                          <td>{{$user->name}}</td>
+                        @endforeach
+                    @else
+                        <td style="opacity: 0.5;">User Not Assigned!</td>
                   @endif                        
-                  
+                @endcan
+  
                 {{-- <td>{{$task->users}}</td> --}}
                 <td >{{ Carbon\Carbon::parse($task->created_at)->format('m/d/Y h:i A') }}</td>
                 <td >{{$task->current_status}}</td>

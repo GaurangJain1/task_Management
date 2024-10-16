@@ -2,7 +2,13 @@
 
   <x-layout>
     <x-slot:heading>
+      @can('isAdmin')
         HOME PAGE FOR ADMIN
+      @endcan
+      @can('isUser')
+          HOME PAGE FOR USER
+      @endcan
+
     </x-slot:heading>
     
     <br>

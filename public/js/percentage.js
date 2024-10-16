@@ -36,7 +36,8 @@
 //   $('#descModal').modal('hide');
 // }
 
-function closeModal(){
+function closeModal(){                    //closes modal 
+  console.log('craz');
   $('#detailform')[0].reset();
   // alert('hello2'); 
   $('.modal-backdrop').remove();
@@ -52,7 +53,7 @@ function closeModal(){
 //   });
 //   return;
 // }
-function fetchTasks(page){
+function fetchTasks(page){                  //fetching items for pagination
   $.ajax({
     url:"/show-tasktable?page=" + page,
     success: function(data){
@@ -77,7 +78,7 @@ function table(){                   //code to render table
         // $('#pagination-links').html(response.pagination);
         // descModal();
       //  pagination();
-      $(document).on('click','.pagination a',function(e){
+      $(document).on('click','.pagination a',function(e){           //req for paggination catched on click
         e.preventDefault();
         console.log("catchedd");
         var page = $(this).attr('href').split('page=')[1];
@@ -118,7 +119,7 @@ function sendComment(){                     //FUNCTION TO SEND COMMENT
   
       },
       success:function(response){
-        loadtable();
+        // loadtable();
       //   if(response.success) {
       //     alert(response.success); // Display success message
       // }
@@ -132,6 +133,8 @@ function sendComment(){                     //FUNCTION TO SEND COMMENT
           success:function(response){
             console.log('should come');
             $('#comments').html(response);
+            const textarea = document.getElementById('messages');
+            textarea.scrollTop = textarea.scrollHeight;
               sendComment();
             return;
 
@@ -144,7 +147,7 @@ function sendComment(){                     //FUNCTION TO SEND COMMENT
     });
   });
 }
-function showComments(){
+function showComments(){                  // code for showing comment section
   $.ajax({
     url:'fill/comments',
     type:'GET',
@@ -154,6 +157,8 @@ function showComments(){
     success:function(response){
       console.log('should come');
       $('#comments').html(response);
+      const textarea = document.getElementById('messages');
+      textarea.scrollTop = textarea.scrollHeight;
       sendComment();
     }
   }); 
@@ -193,6 +198,12 @@ function detailModal(){                 // start of code for prepopulating modal
             const textarea = document.getElementById('messages');
             textarea.scrollTop = textarea.scrollHeight;
 
+                                    //attempting to drop modal
+            // closeModal();
+              // $('#close-actionModal').click(function(){
+              //    // console.log("2ndd");
+              //    $('#actionModal').modal('hide');
+              //  });
             //TRYING THROUGH FUNCTION CALLING
             sendComment();
             // $('#send-comment').click(function(e){

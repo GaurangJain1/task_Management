@@ -25,6 +25,7 @@ class AuthController extends Controller
     //     }
     // }
     public function loginPost(Request $request){
+        // dd($request);,"rolep","rolem"
     //     if($request->rolep == "Assioner"){
     //         $credentials = $request->only("name","password","rolep");
     //     if(Auth::attempt($credentials)){
@@ -44,9 +45,10 @@ class AuthController extends Controller
     //         }
     //     }
         // dd($request->rolep);
-        $credentials = $request->only("name","password");
+        $credentials = $request->only("email","password");
         
         if(Auth::attempt($credentials)){
+            // if($request->rolep == )
             return redirect()->route("showtask");
         }
         else{

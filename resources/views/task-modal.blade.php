@@ -76,7 +76,7 @@
                                                 <option {{ $taskDetail[0]->stature->stature == 'Created!' ? 'selected' : '' }}>Created!</option>
                                               </select>
                                             </div>
-
+                                            @can('isAdmin')
                                           @if(isset($taskDetail[0]->users[0]))
                                                 <div class="sm:col-span-3">
                                                   <label for="priority" class="block text-sm font-medium leading-6 text-gray-900">User Assigned!!</label>
@@ -106,7 +106,9 @@
                                                       @endforeach
                                                     </select>
                                                   </div>
-                                          @endif       
+                                          @endif      
+                                          @endcan
+ 
                                           </div>
                                           <div class="col-span-full">
                                             <label for="cover-photo" class="block text-sm font-medium leading-6 text-gray-900">Attach File</label>

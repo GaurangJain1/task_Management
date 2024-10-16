@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+
 
 use App\Models\Comment;
 use App\Models\task;
 use App\Models\role;    
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\usertasks;
 use App\Models\stature;
@@ -95,22 +97,46 @@ class AjaxController extends Controller
 
         ]);
         //SAVING COMMENT
-        if (isset($request->data_comment)) {
-            $u = Auth::User();
-            $sender = $u->id;
-            // dd($sender);
-            $com = new Comment();
-            $com->comment = $request->data_comment;
-            $com->sender = $sender;
-            $com->task_id = $request->data_id;
-            $com->receiver = $request->user_role;
-            $now = Carbon::now();
-            $com->created_at= $now->setTimezone('Asia/Kolkata');            
-            $com->updated_at= $now->setTimezone('Asia/Kolkata');
-            if($com->save()){
-                return response()->json(['success' => 'Your message here']);
+        if (Gate::allows('isAdmin')) {
+            if (isset($request->data_comment)) {
+                $u = Auth::User();
+                $sender = $u->id;
+                // dd($sender);
+                $com = new Comment();
+                $com->comment = $request->data_comment;
+                $com->sender = $sender;
+                $com->task_id = $request->data_id;
+                $com->receiver = $request->user_role;
+                $now = Carbon::now();
+                $com->created_at= $now->setTimezone('Asia/Kolkata');            
+                $com->updated_at= $now->setTimezone('Asia/Kolkata');
+                if($com->save()){
+                    return response()->json(['success' => 'Your message here']);
+                }
+            }
+        } 
+        else {
+            
+                // DB::enableQueryLog();
+                // dd( DB::getQueryLog());
+            if (isset($request->data_comment)) {
+                $u = Auth::User();
+                $sender = $u->id;
+                $com = new Comment();
+                $com->comment = $request->data_comment;
+                $com->sender = $sender;
+                $com->task_id = $request->data_id;
+                $com->receiver =$reciever;
+                $now = Carbon::now();
+                $com->created_at= $now->setTimezone('Asia/Kolkata');            
+                $com->updated_at= $now->setTimezone('Asia/Kolkata');
+                if($com->save()){
+                    return response()->json(['success' => 'Your message here']);
+                }
             }
         }
+        
+        
     }
     //Edit Selected Task from Modal
     public function editData(Request $request){

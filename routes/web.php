@@ -4,6 +4,7 @@ use App\Http\Controllers\AjaxController;
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\UserPagesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\Check;
 use App\Http\Middleware\checkAdmin;
@@ -35,6 +36,7 @@ Route::post('/update_progress',[AuthController::class,'updateprogressPost'])->na
 
 
 Route::get('/welcome',[PageController::class,'table'])->name("showtask")->middleware(Check::class);
+Route::get('/welcome-user',[UserPagesController::class,'userTable'])->name("showtask-user")->middleware(Check::class);
 Route::get('/archive',[PageController::class,'arch'])->name("showarchivetask")->middleware(Check::class);
 Route::get('show-tasktable',[PageController::class,'table'])->name("showtasktable")->middleware(Check::class);
 Route::get('getData',[AjaxController::class,'viewData'])

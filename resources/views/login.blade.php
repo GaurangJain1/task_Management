@@ -17,8 +17,8 @@
             @csrf
             <h1>Login</h1>
             <div class="input-box">
-                <input type="text" name="name" id="" placeholder="Username" required>
-                <box-icon name='user' type='solid' ></box-icon>
+                <input type="email" name="email" id="" placeholder="Email" required > 
+                <box-icon name='envelope'></box-icon>
             </div>
             <div class="input-box">
                 <input type="password" name="password" id="" placeholder="Password" required>

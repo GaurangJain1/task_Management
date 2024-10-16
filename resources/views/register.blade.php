@@ -40,7 +40,6 @@
             <div class="input-box">
                 <input type="email" name="em" id="" placeholder="Email" required > 
                 <box-icon name='envelope'></box-icon>
-                            
             </div>
             <div class="role">
                 <h5>Select Role</h5>

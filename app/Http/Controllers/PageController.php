@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
@@ -100,11 +101,30 @@ class PageController extends Controller
         // DB::enableQueryLog();
         // $page = $request->input('page', 1);
         // $perPage = $request->input('per_page', 5);
-     
-        $task = task::with('users','stature')->whereHas('stature', function ($query) {
-            $query->where('stature', '=', 'Hold!')->orWhere('stature', '=', 'Re-Assign!')
-            ->orWhere('stature', '=', 'Created!');
-        })->orderByDesc('updated_at','DESC')->paginate(5);      
+
+        // $u = Auth::User();
+        // $sender = $u->name;
+        if (Gate::allows('isUser')) {
+            # code...
+            $task = task::with('users','stature')->whereHas('stature', function ($query) {
+                $query->where('stature', '=', 'Hold!')->orWhere('stature', '=', 'Re-Assign!')
+                ->orWhere('stature', '=', 'Created!');})
+                ->whereHas('users',function($query){
+                    $query->where('name', '=', Auth::User()->name);
+                })
+            ->orderByDesc('updated_at','DESC')->paginate(5);
+        } else {
+            # code...
+            $task = task::with('users','stature')->whereHas('stature', function ($query) {
+                $query->where('stature', '=', 'Hold!')->orWhere('stature', '=', 'Re-Assign!')
+                ->orWhere('stature', '=', 'Created!');
+            })->orderByDesc('updated_at','DESC')->paginate(5); 
+        }
+        
+        
+        // dd($task);
+          
+
         if($request->ajax()){
             return view('task-table',['tasks'=>$task])->render();
         }  
@@ -122,13 +142,27 @@ class PageController extends Controller
         // dd($task);{{ Carbon\Carbon::parse($article->expired_at)->format('Y-m-d') }}
         // return view('task-table',['tasks'=>$task])->render();
         // return response()->json(['tasks' => $tasks]);
-        return view('task-table',['tasks'=>$task]);
+        // return view('task-table',['tasks'=>$task]);
         // return Redirect::back()->with(['tasks'=>$task]);
     }
     public function arch(){
-        $task = task::with('users','stature')->whereHas('stature', function ($query) {
-            $query->where('stature', '=', 'Complete!');
-        })->orderByDesc('updated_at','DESC')->paginate();
+        if (Gate::allows('isUser')) {
+            # code...
+            $task = task::with('users','stature')->whereHas('stature', function ($query) {
+                $query->where('stature', '=', 'Complete!');})
+                ->whereHas('users',function($query){
+                    $query->where('name', '=', Auth::User()->name);
+                })
+            ->orderByDesc('updated_at','DESC')->paginate(5);
+        } else {
+            # code...
+            $task = task::with('users','stature')->whereHas('stature', function ($query) {
+                $query->where('stature', '=', 'Complete!');
+            })->orderByDesc('updated_at','DESC')->paginate(5); 
+        }
+        // $task = task::with('users','stature')->whereHas('stature', function ($query) {
+        //     $query->where('stature', '=', 'Complete!');
+        // })->orderByDesc('updated_at','DESC')->paginate();
         
         // dd($task);
         return view("archive",['tasks'=>$task]);
